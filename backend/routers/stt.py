@@ -1,5 +1,5 @@
 """
-STT Router for Marco AI Interview Simulator
+STT Router for Anviksha AI Interview Simulator
 Handles speech-to-text transcription using Whisper
 """
 from fastapi import APIRouter, UploadFile, File, HTTPException

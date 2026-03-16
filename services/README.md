@@ -1,6 +1,6 @@
-# Marco Services - OCR and Face Tracking
+# Anviksha Services - OCR and Face Tracking
 
-This directory contains core services for the Marco AI Interview Simulator.
+This directory contains core services for the Anviksha AI Interview Simulator.
 
 ## Services Overview
 
@@ -284,4 +284,4 @@ Install Tesseract OCR system binary (see Installation section above)
 
 ## License
 
-Part of Marco AI Interview Simulator project.
+Part of Anviksha AI Interview Simulator project.

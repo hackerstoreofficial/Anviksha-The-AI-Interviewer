@@ -1,5 +1,5 @@
 """
-OCR Service for Marco AI Interview Simulator
+OCR Service for Anviksha AI Interview Simulator
 Extracts text from PDF and DOCX resume files with OCR support for scanned documents.
 """
 

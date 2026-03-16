@@ -1,5 +1,5 @@
 """
-Marco AI Interview Simulator - Services Package
+Anviksha AI Interview Simulator - Services Package
 This package contains core services for OCR, face tracking, TTS, and STT.
 """
 

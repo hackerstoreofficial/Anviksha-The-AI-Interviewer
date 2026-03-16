@@ -1,5 +1,5 @@
 """
-Marco AI Interview Simulator - FastAPI Backend
+Anviksha AI Interview Simulator - FastAPI Backend
 Main application entry point
 """
 
@@ -56,7 +56,7 @@ if frontend_path.exists():
 @app.on_event("startup")
 async def startup_event():
     """Initialize services on startup"""
-    logger.info("Starting Marco AI Interview Simulator...")
+    logger.info("Starting Anviksha AI Interview Simulator...")
     
     # Connect to database
     await db.connect()

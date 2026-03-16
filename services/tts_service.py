@@ -1,5 +1,5 @@
 """
-Text-to-Speech Service for Marco AI Interview Simulator
+Text-to-Speech Service for Anviksha AI Interview Simulator
 Converts interview questions to speech using multiple TTS engines.
 """
 
@@ -207,7 +207,7 @@ def test_tts_service():
         print("\nTesting pyttsx3 (offline TTS)...")
         service = TTSService(engine='pyttsx3')
         
-        test_text = "Hello! This is Marco, your AI interview simulator. I will be asking you questions based on your resume."
+        test_text = "Hello! This is Anviksha, your AI interview simulator. I will be asking you questions based on your resume."
         
         print(f"\nSpeaking: '{test_text}'")
         success = service.speak(test_text)
