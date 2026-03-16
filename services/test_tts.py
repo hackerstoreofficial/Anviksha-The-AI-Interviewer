@@ -49,7 +49,7 @@ def test_basic_speech(service):
     print("=" * 70)
     
     test_sentences = [
-        "Hello! Welcome to Marco, your AI interview simulator.",
+        "Hello! Welcome to Anviksha, your AI interview simulator.",
         "Let's begin with your first question.",
         "Can you describe your experience with Python programming?"
     ]
@@ -110,7 +110,7 @@ def test_save_to_file(service):
     print("TEST 4: Save to File")
     print("=" * 70)
     
-    test_text = "This is Marco. Your interview will begin shortly. Please ensure your microphone and camera are working properly."
+    test_text = "This is Anviksha. Your interview will begin shortly. Please ensure your microphone and camera are working properly."
     output_file = Path(__file__).parent / "test_tts_output.wav"
     
     try:

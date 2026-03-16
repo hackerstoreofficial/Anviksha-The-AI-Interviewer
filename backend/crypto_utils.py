@@ -22,7 +22,7 @@ class CryptoService:
         if not encryption_key:
             # Generate a key from a default secret (NOT SECURE for production!)
             # In production, use a proper secret management system
-            default_secret = "marco-ai-interview-default-secret-key-change-in-production"
+            default_secret = "anviksha-ai-interview-default-secret-key-change-in-production"
             logger.warning("ENCRYPTION_KEY not set in environment. Using default (NOT SECURE for production!)")
             
             # Derive a Fernet key from the secret

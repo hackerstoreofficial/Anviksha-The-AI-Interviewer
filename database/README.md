@@ -1,10 +1,10 @@
-# Marco Database Documentation
+# Anviksha Database Documentation
 
 ## Overview
 SQLite3 database for storing candidate profiles, interview sessions, and AI evaluations.
 
 ## Database Location
-`database/marco_interviews.db`
+`database/anviksha_interviews.db`
 
 ## Quick Start
 

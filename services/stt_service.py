@@ -1,5 +1,5 @@
 """
-Speech-to-Text Service for Marco AI Interview Simulator
+Speech-to-Text Service for Anviksha AI Interview Simulator
 Converts candidate speech to text using multiple STT engines.
 """
 

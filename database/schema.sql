@@ -1,4 +1,4 @@
--- Marco AI Interview Simulator Database Schema
+-- Anviksha AI Interview Simulator Database Schema
 -- SQLite3 Database for storing candidate information, interview sessions, and evaluations
 
 -- Table 1: Candidates

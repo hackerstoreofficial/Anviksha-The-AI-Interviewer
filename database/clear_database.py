@@ -1,5 +1,5 @@
 """
-Marco AI Interview Simulator - Clear Database Script
+Anviksha AI Interview Simulator - Clear Database Script
 This script safely deletes and reinitializes the database.
 WARNING: This will delete ALL interview data!
 """
@@ -11,7 +11,7 @@ import sys
 
 # Database configuration
 DB_DIR = Path(__file__).parent
-DB_PATH = DB_DIR / "marco_interviews.db"
+DB_PATH = DB_DIR / "anviksha_interviews.db"
 SCHEMA_PATH = DB_DIR / "schema.sql"
 
 
@@ -52,7 +52,7 @@ def clear_database(force=False):
         force: If True, skip confirmation prompt
     """
     print("\n" + "=" * 70)
-    print("🗑️  CLEAR DATABASE - Marco AI Interview Simulator")
+    print("🗑️  CLEAR DATABASE - Anviksha AI Interview Simulator")
     print("=" * 70)
     
     # Check if database exists

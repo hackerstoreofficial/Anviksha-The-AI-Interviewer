@@ -1,5 +1,5 @@
 """
-Marco AI Interview Simulator - Database Initialization Script
+Anviksha AI Interview Simulator - Database Initialization Script
 This script creates and initializes the SQLite database with the schema.
 """
 
@@ -9,14 +9,14 @@ from pathlib import Path
 
 # Database configuration
 DB_DIR = Path(__file__).parent
-DB_PATH = DB_DIR / "marco_interviews.db"
+DB_PATH = DB_DIR / "anviksha_interviews.db"
 SCHEMA_PATH = DB_DIR / "schema.sql"
 
 
 def init_database():
     """Initialize the database with schema from schema.sql"""
     
-    print(f"[DATABASE] Initializing Marco Interview Database...")
+    print(f"[DATABASE] Initializing Anviksha Interview Database...")
     print(f"[DATABASE] Location: {DB_PATH}")
     
     # Check if schema file exists

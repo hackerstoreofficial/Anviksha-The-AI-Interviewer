@@ -1,5 +1,5 @@
 """
-Database connection and operations for Marco AI Interview Simulator
+Database connection and operations for Anviksha AI Interview Simulator
 """
 
 import aiosqlite

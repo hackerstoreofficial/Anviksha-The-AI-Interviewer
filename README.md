@@ -1,4 +1,4 @@
-# 🎯 Marco - AI Interview Simulator
+# 🎯 Anviksha - AI Interview Simulator
 
 <div align="center">
 
@@ -17,7 +17,7 @@
 
 ## 📖 Overview
 
-Marco is a production-ready AI interview simulator that provides realistic technical interviews with:
+Anviksha is a production-ready AI interview simulator that provides realistic technical interviews with:
 - 🤖 **Multi-Provider LLM Support** - OpenAI, Gemini, Groq, Anthropic, OpenRouter
 - 👁️ **Advanced Proctoring** - Face tracking + tab detection with violation management
 - 🎤 **Speech Integration** - Whisper STT for transcription, TTS for question reading
@@ -67,8 +67,8 @@ Marco is a production-ready AI interview simulator that provides realistic techn
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/marco-ai-interview.git
-cd marco-ai-interview
+git clone https://github.com/yourusername/anviksha-ai-interview.git
+cd anviksha-ai-interview
 ```
 
 2. **Create and activate virtual environment**
@@ -121,7 +121,7 @@ http://127.0.0.1:8000/static/index.html
 ## 📁 Project Structure
 
 ```
-marco-ai-interview/
+anviksha-ai-interview/
 ├── backend/              # FastAPI application
 │   ├── main.py          # Application entry point
 │   ├── database.py      # Async SQLite operations
@@ -164,7 +164,7 @@ Create a `.env` file (copy from `.env.example`):
 
 ```bash
 # Database
-DATABASE_URL=database/marco_interviews.db
+DATABASE_URL=database/anviksha_interviews.db
 
 # Encryption (REQUIRED for production)
 ENCRYPTION_KEY=your-fernet-key-here
@@ -296,9 +296,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- 📧 **Email**: support@marco-ai.example.com
-- 🐛 **Issues**: [GitHub Issues](https://github.com/yourusername/marco-ai-interview/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/yourusername/marco-ai-interview/discussions)
+- 📧 **Email**: support@anviksha-ai.example.com
+- 🐛 **Issues**: [GitHub Issues](https://github.com/yourusername/anviksha-ai-interview/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/yourusername/anviksha-ai-interview/discussions)
 
 ---
 

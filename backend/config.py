@@ -7,12 +7,12 @@ class Settings(BaseSettings):
     """Application settings loaded from environment variables"""
     
     # Application
-    APP_NAME: str = "Marco AI Interview Simulator"
+    APP_NAME: str = "Anviksha AI Interview Simulator"
     APP_VERSION: str = "1.0.0"
     DEBUG: bool = True
     
     # Database
-    DATABASE_PATH: Path = Path(__file__).parent.parent / "database" / "marco_interviews.db"
+    DATABASE_PATH: Path = Path(__file__).parent.parent / "database" / "anviksha_interviews.db"
     # Added this so it doesn't crash reading your .env
     DATABASE_URL: Optional[str] = None 
     
