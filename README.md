@@ -62,6 +62,7 @@ Anviksha is a production-ready AI interview simulator that provides realistic te
 - Python 3.11+
 - Virtual environment (required)
 - Webcam (for proctoring)
+- Microphone (for speech recognition)
 
 ### Installation
 
