@@ -67,7 +67,7 @@ Anviksha is a production-ready AI interview simulator that provides realistic te
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/anviksha-ai-interview.git
+git clone https://github.com/hackerstoreofficial/Anviksha-The-AI-Interviewer.git
 cd anviksha-ai-interview
 ```
 
