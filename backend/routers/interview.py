@@ -200,18 +200,23 @@ async def get_next_question(
             if not llm_service:
                 # Try to re-init service if missing
                 try:
+                    from ..crypto_utils import decrypt_api_key
+                    encrypted_key = session.get('encrypted_api_key')
+                    if not encrypted_key:
+                        raise ValueError("No encrypted API key found in session")
+                        
+                    api_key = decrypt_api_key(encrypted_key)
+                    
                     llm_config = LLMConfig(
                         provider=session['api_provider'],
-                        api_key=os.environ.get(f"{session['api_provider'].upper()}_API_KEY", ""),
-                        # Only works if API key is in env, otherwise we might fail if it was passed in start request
-                        # But typically start_interview initializes it.
-                        # For robustness, we should persist API keys encrypted or require re-auth, 
-                        # but for now we assume in-memory service exists or we fail.
+                        api_key=api_key,
+                        model=session.get('api_model'),
+                        base_url=session.get('api_base_url')
                     )
-                    # Note: This fallback is weak if _llm_services is cleared. 
-                    # Ideally we should store API key in DB (encrypted) or session.
-                except:
-                    logger.error(f"LLM Service not found for session {request.session_id}")
+                    llm_service = LLMService(llm_config)
+                    _llm_services[request.session_id] = llm_service
+                except Exception as e:
+                    logger.error(f"LLM Service not found and failed to recreate for session {request.session_id}: {e}")
                     raise HTTPException(status_code=500, detail="Interview session invalid (LLM service lost)")
 
             # Get candidate data for context

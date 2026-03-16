@@ -55,22 +55,42 @@ class Database:
     async def create_candidate(self, name: str, email: str, phone: str, 
                               target_position: str, resume_text: str = "",
                               parsed_data: Dict = None) -> int:
-        """Create new candidate"""
+        """Create new candidate or update existing one"""
         # Extract parsed data fields
         parsed = parsed_data or {}
         skills = json.dumps(parsed.get('skills', []))
         experience = json.dumps(parsed.get('experience', []))
         projects = json.dumps(parsed.get('projects', []))
         
-        query = """
-            INSERT INTO candidates (name, email, phone, target_position, resume_text, skills, experience, projects)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        """
-        cursor = await self.execute(
-            query,
-            (name, email, phone, target_position, resume_text, skills, experience, projects)
-        )
-        return cursor.lastrowid
+        # Check if candidate exists first
+        query_check = "SELECT id FROM candidates WHERE email = ?"
+        cursor_check = await self.execute(query_check, (email,))
+        row = await cursor_check.fetchone()
+        
+        if row:
+            # Update existing candidate
+            candidate_id = row['id']
+            query = """
+                UPDATE candidates 
+                SET name = ?, phone = ?, target_position = ?, updated_at = CURRENT_TIMESTAMP
+                WHERE id = ?
+            """
+            await self.execute(
+                query,
+                (name, phone, target_position, candidate_id)
+            )
+            return candidate_id
+        else:
+            # Create new candidate
+            query = """
+                INSERT INTO candidates (name, email, phone, target_position, resume_text, skills, experience, projects)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            """
+            cursor = await self.execute(
+                query,
+                (name, email, phone, target_position, resume_text, skills, experience, projects)
+            )
+            return cursor.lastrowid
     
     async def get_candidate(self, candidate_id: int) -> Optional[Dict]:
         """Get candidate by ID"""

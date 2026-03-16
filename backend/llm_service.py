@@ -55,7 +55,7 @@ class LLMService:
                 key_preview = f"{self.config.api_key[:10]}...{self.config.api_key[-4:]}" if len(self.config.api_key) > 14 else "***"
                 logger.info(f"API key format: {key_preview} (length: {len(self.config.api_key)})")
                 self.client = Groq(api_key=self.config.api_key.strip())  # Strip whitespace
-                self.default_model = "openai/gpt-oss-120b"  # User's working Groq model
+                self.default_model = "llama-3.3-70b-versatile"  # Standard Groq model
                 
             elif self.config.provider == 'anthropic':
                 from anthropic import Anthropic
@@ -417,7 +417,7 @@ Return a JSON object with these exact keys: overall_score (number), strengths (a
             import re
             
             # Extract JSON from response
-            json_match = re.search(r'\{{[\s\S]*\}}', response_text)
+            json_match = re.search(r'\{[\s\S]*\}', response_text)
             if json_match:
                 eval_data = json.loads(json_match.group())
                 return {
