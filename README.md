@@ -7,7 +7,7 @@
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg)
 
-**An intelligent AI-powered interview simulator with comprehensive proctoring and real-time feedback**
+<strong>An intelligent AI-powered interview simulator with comprehensive proctoring and real-time feedback</strong>
 
 [Features](#-features) • [Quick Start](#-quick-start) • [Documentation](#-documentation) • [Demo](#-demo) • [Contributing](#-contributing)
 
@@ -18,6 +18,7 @@
 ## 📖 Overview
 
 Anviksha is a production-ready AI interview simulator that provides realistic technical interviews with:
+
 - 🤖 **Multi-Provider LLM Support** - OpenAI, Gemini, Groq, Anthropic, OpenRouter
 - 👁️ **Advanced Proctoring** - Face tracking + tab detection with violation management
 - 🎤 **Speech Integration** - Whisper STT for transcription, TTS for question reading
@@ -30,6 +31,7 @@ Anviksha is a production-ready AI interview simulator that provides realistic te
 ## ✨ Features
 
 ### 🎭 Complete Interview Flow (5 Modules)
+
 1. **Guidelines & Compliance** - Interview rules and anti-cheat policy
 2. **Candidate Profiling** - Resume upload with OCR parsing
 3. **System Permissions** - Camera, microphone, screen share validation
@@ -37,6 +39,7 @@ Anviksha is a production-ready AI interview simulator that provides realistic te
 5. **Evaluation & Feedback** - AI-generated scores and insights
 
 ### 🛡️ Proctoring System
+
 - **Face Tracking**: HeadPoseDetector (dlib + OpenCV DNN)
   - Max 5 violations (2+ seconds continuous looking away)
   - Real-time head pose estimation (pitch, yaw, roll)
@@ -45,11 +48,13 @@ Anviksha is a production-ready AI interview simulator that provides realistic te
 - **Time Limit**: 30-minute maximum interview duration
 
 ### 🧠 AI Capabilities
+
 - **Dynamic Question Generation** - Based on resume and previous answers
 - **Answer Evaluation** - Technical accuracy, clarity, relevance scoring
 - **Final Assessment** - Overall score with strengths and improvements
 
 ### 🔒 Security Features
+
 - **Encrypted API Keys** - Fernet symmetric encryption
 - **Secure Storage** - Keys encrypted at rest in database
 - **Session Management** - Isolated sessions with violation tracking
@@ -59,6 +64,7 @@ Anviksha is a production-ready AI interview simulator that provides realistic te
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Python 3.11+
 - Virtual environment (required)
 - Webcam (for proctoring)
@@ -67,12 +73,14 @@ Anviksha is a production-ready AI interview simulator that provides realistic te
 ### Installation
 
 1. **Clone the repository**
+
 ```bash
 git clone https://github.com/hackerstoreofficial/Anviksha-The-AI-Interviewer.git
 cd anviksha-ai-interview
 ```
 
-2. **Create and activate virtual environment**
+1. **Create and activate virtual environment**
+
 ```bash
 # Windows
 python -m venv .venv
@@ -83,22 +91,26 @@ python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-3. **Install dependencies**
+1. **Install dependencies**
+
 ```bash
 pip install -r requirements.txt
 ```
 
-4. **Download face detection models**
+1. **Download face detection models**
+
 ```bash
 python services/download_models.py
 ```
 
-5. **Initialize database**
+1. **Initialize database**
+
 ```bash
 python database/init_db.py
 ```
 
-6. **Configure environment**
+1. **Configure environment**
+
 ```bash
 # Copy example env file
 cp .env.example .env
@@ -107,13 +119,15 @@ cp .env.example .env
 # Generate key: python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
 ```
 
-7. **Start the server**
+1. **Start the server**
+
 ```bash
 uvicorn backend.main:app --reload --port 8000
 ```
 
-8. **Open in browser**
-```
+1. **Open in browser**
+
+```text
 http://127.0.0.1:8000/static/index.html
 ```
 
@@ -121,7 +135,7 @@ http://127.0.0.1:8000/static/index.html
 
 ## 📁 Project Structure
 
-```
+```text
 anviksha-ai-interview/
 ├── backend/              # FastAPI application
 │   ├── main.py          # Application entry point
@@ -150,6 +164,7 @@ anviksha-ai-interview/
 ## 🎨 Design Philosophy
 
 **Zen Focus Theme** - A calm, anxiety-reducing interface designed to help candidates perform their best:
+
 - 🌿 Soft sage green color palette
 - 🎭 Smooth, breathing-like animations
 - 📱 Responsive design for all devices
@@ -182,6 +197,7 @@ FACE_LOOKING_AWAY_DURATION=2.0
 ### API Keys
 
 Users provide their own API keys during the interview setup:
+
 - OpenAI: `sk-...`
 - Google Gemini: `AIza...`
 - Groq: `gsk_...`
@@ -209,6 +225,7 @@ Keys are encrypted and stored securely in the database.
 ## 🧪 Testing
 
 ### Service Tests
+
 ```bash
 # OCR Service
 python services/test_ocr.py
@@ -221,6 +238,7 @@ python services/test_tts.py
 ```
 
 ### Database Management
+
 ```bash
 # Clear database (interactive)
 python database/clear_database.py
@@ -297,8 +315,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- 📧 **Email**: support@anviksha-ai.example.com
-- 🐛 **Issues**: [GitHub Issues](https://github.com/yourusername/anviksha-ai-interview/issues)
+- 📧 **Email**: <support@anviksha-ai.example.com>
+- 🐛 **Issues**: [GitHub Issues](https://github.com/hackerstoreofficial/Anviksha-The-AI-Interviewer/issues)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/yourusername/anviksha-ai-interview/discussions)
 
 ---
