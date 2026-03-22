@@ -78,20 +78,20 @@ Anviksha is a production-ready AI interview simulator that provides realistic te
 
 Using PowerShell or Command Prompt (CMD):
 
-1. Clone the Repository:
+1. **Clone the Repository:**
 
 ```PowerShell
 git clone https://github.com/hackerstoreofficial/Anviksha-The-AI-Interviewer.git
 cd Anviksha-The-AI-Interviewer
 ```
 
-2.Create a Virtual Environment:
+2.**Create a Virtual Environment:**
 
 ```PowerShell
 python -m venv venv
 ```
 
-3.Activate the Virtual Environment:
+3.**Activate the Virtual Environment:**
 
 - For PowerShell:
 
@@ -105,13 +105,13 @@ python -m venv venv
 .\venv\Scripts\activate.bat
 ```
 
-4.Install Dependencies:
+4.**Install Dependencies:**
 
 ```PowerShell
 pip install -r requirements.txt
 ```
 
-5.Setup Environment Variables:
+5.**Setup Environment Variables:**
 
 Create a file named .env in the root folder and add:
 
@@ -126,31 +126,31 @@ Replace `your_gemini_api_key_here` with your actual Google Gemini API key.
 
 Using the Terminal:
 
-1.Update and Install Essentials:
+1.**Update and Install Essentials:**
 
 ```bash
 sudo apt update && sudo apt install git python3-pip python3-venv -y
 ```
 
-2.Clone and Navigate:
+2.**Clone and Navigate:**
 
 ```bash
 git clone https://github.com/hackerstoreofficial/Anviksha-The-AI-Interviewer.git
 cd Anviksha-The-AI-Interviewer
 ```
 
-3.Create and Activate Virtual Environment:
+3.**Create and Activate Virtual Environment:**
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
-4.Install Requirements:
+4.**Install Requirements:**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-5.Setup Environment Variables:
+5.**Setup Environment Variables:**
 nano .env and paste:
 
 ```Plaintext
@@ -162,27 +162,27 @@ DATABASE_URL=sqlite+aiosqlite:///./database/anviksha_interviews.db
 
 Using the Terminal:
 
-1.Clone the Repository:
+1.**Clone the Repository:**
 
 ```bash
 git clone https://github.com/hackerstoreofficial/Anviksha-The-AI-Interviewer.git
 cd Anviksha-The-AI-Interviewer
 ```
 
-2.Create and Activate Virtual Environment:
+2.**Create and Activate Virtual Environment:**
 
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-3.Install Dependencies:
+3.**Install Dependencies:**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-4.Setup Environment Variables:
+4.**Setup Environment Variables:**
 
 Create a .env file and add your AI_API_KEY.
 
@@ -190,20 +190,20 @@ Create a .env file and add your AI_API_KEY.
 
 After installing the dependencies, you must initialize the database tables to avoid the "no such table: candidates" error.
 
-A. Initialize the Database
+A. **Initialize the Database**
 Run this command once in your terminal (with the virtual environment active):
 
 ```bash
 python3 -c "import asyncio; from backend.database import engine, Base; async def init(): async with engine.begin() as conn: await conn.run_sync(Base.metadata.create_all); asyncio.run(init())"
 ```
 
-B. Start the Backend Server
+B. **Start the Backend Server**
 
 ```bash
 uvicorn backend.main:app --reload --port 8000
 ```
 
-C. Access the Application
+C. **Access the Application**
 Open your web browser and navigate to:
 
 - Web Interface: http://127.0.0.1:8000/static/index.html
