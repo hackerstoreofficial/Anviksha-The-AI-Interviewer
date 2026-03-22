@@ -1,6 +1,6 @@
-# 🎯 Anviksha - AI Interview Simulator
-
 <div align="center">
+
+# 🎯 Anviksha - AI Interview Simulator
 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)
