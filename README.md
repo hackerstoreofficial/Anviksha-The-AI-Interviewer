@@ -65,71 +65,149 @@ Anviksha is a production-ready AI interview simulator that provides realistic te
 
 ### Prerequisites
 
+- Git installed
 - Python 3.11+
 - Virtual environment (required)
 - Webcam (for proctoring)
 - Microphone (for speech recognition)
+- An AI's API Keys (OpenAI, Gemini, Groq, Anthropic)
 
 ### Installation
 
-1. **Clone the repository**
+#### A. **Step-by-Step for Windows**
+
+Using PowerShell or Command Prompt (CMD):
+
+1. Clone the Repository:
+
+```PowerShell
+git clone https://github.com/hackerstoreofficial/Anviksha-The-AI-Interviewer.git
+cd Anviksha-The-AI-Interviewer
+```
+
+2.Create a Virtual Environment:
+
+```PowerShell
+python -m venv venv
+```
+
+3.Activate the Virtual Environment:
+
+- For PowerShell:
+
+```PowerShell
+.\venv\Scripts\Activate.ps1
+```
+
+- For Command Prompt (CMD):
+
+```cmd
+.\venv\Scripts\activate.bat
+```
+
+4.Install Dependencies:
+
+```PowerShell
+pip install -r requirements.txt
+```
+
+5.Setup Environment Variables:
+
+Create a file named .env in the root folder and add:
+
+```Plaintext
+ENCRYPTION_KEY=your-encryption-key-here
+DATABASE_URL=sqlite+aiosqlite:///./database/anviksha_interviews.db
+```
+
+Replace `your_gemini_api_key_here` with your actual Google Gemini API key.
+
+#### B. Step-by-Step for Linux (Ubuntu/Debian)
+
+Using the Terminal:
+
+1.Update and Install Essentials:
+
+```bash
+sudo apt update && sudo apt install git python3-pip python3-venv -y
+```
+
+2.Clone and Navigate:
 
 ```bash
 git clone https://github.com/hackerstoreofficial/Anviksha-The-AI-Interviewer.git
-cd anviksha-ai-interview
+cd Anviksha-The-AI-Interviewer
 ```
 
-1. **Create and activate virtual environment**
-
+3.Create and Activate Virtual Environment:
 ```bash
-# Windows
-python -m venv .venv
-.venv\Scripts\activate
-
-# Linux/Mac
-python3 -m venv .venv
-source .venv/bin/activate
+python3 -m venv venv
+source venv/bin/activate
 ```
-
-1. **Install dependencies**
+4.Install Requirements:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-1. **Download face detection models**
+5.Setup Environment Variables:
+nano .env and paste:
 
-```bash
-python services/download_models.py
+```Plaintext
+ENCRYPTION_KEY=your-encryption-key-here
+DATABASE_URL=sqlite+aiosqlite:///./database/anviksha_interviews.db
 ```
 
-1. **Initialize database**
+#### C. Step-by-Step for macOS
+
+Using the Terminal:
+
+1.Clone the Repository:
 
 ```bash
-python database/init_db.py
+git clone https://github.com/hackerstoreofficial/Anviksha-The-AI-Interviewer.git
+cd Anviksha-The-AI-Interviewer
 ```
 
-1. **Configure environment**
+2.Create and Activate Virtual Environment:
 
 ```bash
-# Copy example env file
-cp .env.example .env
-
-# Edit .env and set your encryption key
-# Generate key: python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+python3 -m venv venv
+source venv/bin/activate
 ```
 
-1. **Start the server**
+3.Install Dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+4.Setup Environment Variables:
+
+Create a .env file and add your AI_API_KEY.
+
+### Final Critical Steps (Common for All)
+
+After installing the dependencies, you must initialize the database tables to avoid the "no such table: candidates" error.
+
+A. Initialize the Database
+Run this command once in your terminal (with the virtual environment active):
+
+```bash
+python3 -c "import asyncio; from backend.database import engine, Base; async def init(): async with engine.begin() as conn: await conn.run_sync(Base.metadata.create_all); asyncio.run(init())"
+```
+
+B. Start the Backend Server
 
 ```bash
 uvicorn backend.main:app --reload --port 8000
 ```
 
-1. **Open in browser**
+C. Access the Application
+Open your web browser and navigate to:
 
-```text
-http://127.0.0.1:8000/static/index.html
-```
+- Web Interface: http://127.0.0.1:8000/static/index.html
+- API Documentation: http://127.0.0.1:8000/docs
 
 ---
 
@@ -137,25 +215,10 @@ http://127.0.0.1:8000/static/index.html
 
 ```text
 anviksha-ai-interview/
-├── backend/              # FastAPI application
-│   ├── main.py          # Application entry point
-│   ├── database.py      # Async SQLite operations
-│   ├── llm_service.py   # Multi-provider LLM service
-│   ├── crypto_utils.py  # API key encryption
-│   └── routers/         # API endpoints
-├── services/            # Core services
-│   ├── ocr_service.py   # Resume parsing
-│   ├── stt_service.py   # Whisper STT
-│   ├── tts_service.py   # Text-to-speech
-│   └── headpose_detection.py  # Face proctoring
-├── frontend/            # Web interface
-│   ├── index.html       # Landing page
-│   ├── interview.html   # Interview interface
-│   ├── evaluation.html  # Results page
-│   └── styles.css       # Zen Focus design
-├── database/            # SQLite database
-│   ├── schema.sql       # Database schema
-│   └── init_db.py       # Initialization
+├── backend/              # FastAPI server handling all business logic, candidate interviews, and API endpoints
+├── services/            # Core AI/ML services: resume OCR parsing, speech recognition, text-to-speech, and face proctoring for integrity
+├── frontend/            # Web UI for candidates to take interviews and view results
+├── database/            # SQLite schema and initialization scripts
 └── requirements.txt     # Python dependencies
 ```
 
