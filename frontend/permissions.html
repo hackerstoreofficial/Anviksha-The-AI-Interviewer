@@ -255,13 +255,13 @@
 
         // Navigation
         document.getElementById('backBtn').addEventListener('click', () => {
-            window.location.href = '/static/profile.html';
+            window.location.href = 'profile.html';
         });
 
         document.getElementById('startInterviewBtn').addEventListener('click', () => {
             // Mark permissions as granted in sessionStorage
             sessionStorage.setItem('permissionsGranted', 'true');
-            window.location.href = '/static/interview.html';
+            window.location.href = 'interview.html';
         });
     </script>
 
