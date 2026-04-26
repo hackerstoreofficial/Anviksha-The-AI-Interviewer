@@ -7,7 +7,7 @@
 
     console.log('[WHISPER-STT] Initializing enhanced Whisper speech recognition module v2.0');
 
-    const BACKEND_URL = 'http://localhost:8000';
+    const BACKEND_URL = "https://anvikshaai.page";
     const CHUNK_DURATION = 6000; // 6 seconds per chunk (better balance)
     const SILENCE_THRESHOLD = 0.01; // Audio level threshold to detect silence
     const MAX_RETRIES = 1; // Retry failed transcriptions once

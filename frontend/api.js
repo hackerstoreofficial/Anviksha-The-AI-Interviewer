@@ -2,7 +2,7 @@
 // API Configuration
 const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://localhost:8000'
-    : '/api'; // Relative path for production/same-origin
+    : ''; // Relative path for production/same-origin
 
 // API Helper Functions
 const api = {
