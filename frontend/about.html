@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="About Anviksha – Learn about our mission to make AI-powered interview preparation accessible, fair, and effective for every candidate.">
+    <title>About Us – Anviksha AI Interview Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* ── Page-level layout ── */
+        .about-wrapper {
+            min-height: 100vh;
+            background: var(--cream-bg);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+
+        /* (nav styles provided by header.js) */
+
+        /* ── Hero ── */
+        .hero {
+            text-align: center;
+            padding: 5rem 2rem 3rem;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--sage-light);
+            color: var(--sage-dark);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.4rem 1.1rem;
+            border-radius: var(--radius-pill);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.6s ease both;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 1.25rem;
+            animation: fadeInUp 0.7s ease 0.1s both;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--sage-dark);
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--gray-muted);
+            line-height: 1.8;
+            font-weight: 300;
+            animation: fadeInUp 0.7s ease 0.2s both;
+            margin-bottom: 0;
+        }
+
+        /* ── Section wrapper ── */
+        .section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--sage-dark);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 1.25rem;
+            color: var(--slate-text);
+        }
+
+        /* ── Divider ── */
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--sage-dark), transparent);
+            margin: 0 auto 3rem;
+            border-radius: 2px;
+        }
+
+        /* ── Mission cards ── */
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .mission-card {
+            background: var(--white);
+            border: 1px solid rgba(139, 175, 139, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-soft);
+            transition: all var(--transition-medium);
+            animation: fadeInUp 0.6s ease both;
+        }
+
+        .mission-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(139, 175, 139, 0.5);
+        }
+
+        .mission-card-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .mission-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.6rem;
+            color: var(--slate-text);
+        }
+
+        .mission-card p {
+            font-size: 0.9rem;
+            color: var(--gray-muted);
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* ── Story section ── */
+        .story-section {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-soft);
+            padding: 3.5rem;
+            margin: 0 2rem;
+            max-width: 860px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .story-section p {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--slate-text);
+            font-weight: 300;
+        }
+
+        .story-section p+p {
+            margin-top: 1rem;
+        }
+
+        .story-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .story-highlight {
+            border-left: 3px solid var(--sage-dark);
+            padding-left: 1.25rem;
+            margin: 2rem 0;
+            color: var(--slate-text);
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            font-style: italic;
+            line-height: 1.8;
+        }
+
+        /* ── Tech stack ── */
+        .tech-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech-chip {
+            background: var(--sage-light);
+            color: var(--sage-dark);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.4rem 1rem;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(139, 175, 139, 0.4);
+            transition: all var(--transition-fast);
+        }
+
+        .tech-chip:hover {
+            background: var(--sage-dark);
+            color: var(--white);
+        }
+
+        /* ── Values ── */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .value-item {
+            text-align: center;
+            padding: 1.75rem 1.25rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(139, 175, 139, 0.15);
+            background: var(--white);
+            box-shadow: var(--shadow-soft);
+            transition: all var(--transition-medium);
+        }
+
+        .value-item:hover {
+            background: var(--sage-light);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .value-emoji {
+            font-size: 2.25rem;
+            display: block;
+            margin-bottom: 0.75rem;
+        }
+
+        .value-item h4 {
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            color: var(--slate-text);
+        }
+
+        .value-item p {
+            font-size: 0.82rem;
+            color: var(--gray-muted);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* ── Stats banner ── */
+        .stats-banner {
+            background: linear-gradient(135deg, var(--sage-dark) 0%, #6a9e6a 100%);
+            color: var(--white);
+            border-radius: var(--radius-xl);
+            padding: 3rem 2rem;
+            margin: 0 2rem;
+            max-width: 860px;
+            margin-left: auto;
+            margin-right: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {}
+
+        .stat-number {
+            font-family: var(--font-serif);
+            font-size: 2.75rem;
+            font-weight: 300;
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            opacity: 0.85;
+            font-weight: 400;
+        }
+
+        /* ── Team section ── */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.75rem;
+            margin-top: 2rem;
+        }
+
+        .team-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(139, 175, 139, 0.15);
+            transition: all var(--transition-medium);
+            /* flex column so badge+button always sit at the bottom */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(139, 175, 139, 0.4);
+        }
+
+        /* Guide card gets a golden accent */
+        .team-card.guide-card {
+            border-color: rgba(205, 160, 60, 0.35);
+            background: linear-gradient(145deg, #fffdf5, var(--white));
+        }
+
+        .team-card.guide-card:hover {
+            border-color: rgba(205, 160, 60, 0.6);
+        }
+
+        .team-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: var(--sage-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+            border: 2px solid rgba(139, 175, 139, 0.3);
+        }
+
+        .team-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            border-radius: 50%;
+        }
+
+        .team-avatar.guide-avatar {
+            border: 2px solid rgba(205, 160, 60, 0.5);
+            background: #fffdf5;
+        }
+
+        .team-card h3 {
+            font-size: 1.05rem;
+            margin-bottom: 0.25rem;
+            color: var(--slate-text);
+        }
+
+        .team-card .team-role {
+            font-size: 0.8rem;
+            color: var(--sage-dark);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        .team-card.guide-card .team-role {
+            color: #b08a1a;
+        }
+
+        .team-card p {
+            font-size: 0.85rem;
+            color: var(--gray-muted);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* Enrollment ID badge */
+        .enrol-badge {
+            display: inline-block;
+            background: var(--sage-light);
+            color: var(--sage-dark);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            padding: 0.25rem 0.7rem;
+            border-radius: var(--radius-pill);
+            margin-top: auto;   /* pushes badge to bottom regardless of content height */
+            margin-bottom: 0.5rem;
+        }
+
+        /* About Me button */
+        .about-me-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            margin-top: 0.6rem;
+            padding: 0.35rem 1rem;
+            border-radius: var(--radius-pill);
+            border: 1px solid var(--sage-dark);
+            color: var(--sage-dark);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            transition: all var(--transition-fast);
+            background: transparent;
+        }
+
+        .about-me-btn:hover {
+            background: var(--sage-dark);
+            color: var(--white);
+            transform: translateY(-1px);
+        }
+
+        /* ── Academic / Institution card ── */
+        .institution-card {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(139, 175, 139, 0.2);
+            padding: 2.5rem 3rem;
+            max-width: 860px;
+            margin: 0 auto;
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .institution-logo {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 2px solid rgba(139, 175, 139, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+            padding: 4px;
+        }
+
+        .institution-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .institution-info {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .institution-info h3 {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            font-weight: 400;
+            margin-bottom: 0.3rem;
+            color: var(--slate-text);
+        }
+
+        .institution-info p {
+            font-size: 0.88rem;
+            color: var(--gray-muted);
+            margin: 0 0 0.2rem;
+            line-height: 1.5;
+        }
+
+        .institution-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1rem;
+        }
+
+        .meta-pill {
+            background: var(--sage-light);
+            color: var(--sage-dark);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.3rem 0.85rem;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(139, 175, 139, 0.3);
+        }
+
+        @media (max-width: 600px) {
+            .institution-card {
+                padding: 1.75rem 1.25rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.25rem;
+            }
+        }
+
+        /* ── CTA footer strip ── */
+        .cta-strip {
+            text-align: center;
+            padding: 4rem 2rem 5rem;
+        }
+
+        .cta-strip h2 {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .cta-strip p {
+            color: var(--gray-muted);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .story-section {
+                padding: 2rem 1.5rem;
+                margin: 0 1rem;
+            }
+
+            .stats-banner {
+                margin: 0 1rem;
+            }
+
+            .top-nav {
+                padding: 1rem 1.25rem;
+            }
+
+            .section {
+                padding: 2.5rem 1.25rem;
+            }
+        }
+
+        /* ── Staggered animation delays ── */
+        .mission-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .mission-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .mission-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .mission-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Shared site header (nav) -->
+    <script src="./header.js"></script>
+    <div class="about-wrapper">
+
+        <!-- Background Decorations -->
+        <div class="bg-blob bg-blob-1"></div>
+        <div class="bg-blob bg-blob-2"></div>
+
+        <!-- ── Hero ── -->
+        <header class="hero">
+            <div class="hero-badge">🌿 Our Story</div>
+            <h1>Built to help you<br><em>put your best forward</em></h1>
+            <p class="hero-subtitle">
+                Anviksha was born from a simple belief — every candidate deserves a calm, intelligent,
+                and fair way to prepare for the interview that could change their life.
+            </p>
+        </header>
+
+        <div class="divider"></div>
+
+        <!-- ── Mission ── -->
+        <section class="section" id="mission" aria-labelledby="missionTitle">
+            <p class="section-label">Our Mission</p>
+            <h2 class="section-title" id="missionTitle">Empowering candidates with AI, not intimidating them</h2>
+
+            <div class="mission-grid">
+                <div class="mission-card">
+                    <div class="mission-card-icon">🤖</div>
+                    <h3>AI-Driven Personalisation</h3>
+                    <p>Questions adapt in real-time to your resume, experience level, and the role you're targeting — no
+                        two interviews are the same.</p>
+                </div>
+                <div class="mission-card">
+                    <div class="mission-card-icon">🎯</div>
+                    <h3>Honest Feedback</h3>
+                    <p>Our AI evaluator scores each answer on technical accuracy, clarity, and relevance — giving you
+                        insight that generic prep tools simply can't.</p>
+                </div>
+                <div class="mission-card">
+                    <div class="mission-card-icon">🔒</div>
+                    <h3>Privacy First</h3>
+                    <p>Your data and API keys are encrypted at rest using Fernet symmetric encryption. We never store
+                        what we don't need.</p>
+                </div>
+                <div class="mission-card">
+                    <div class="mission-card-icon">🌿</div>
+                    <h3>Calm by Design</h3>
+                    <p>The Zen Focus interface is intentionally minimal and soothing — because interview anxiety is the
+                        enemy of your best performance.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Stats ── -->
+        <div class="stats-banner" role="region" aria-label="Key statistics">
+            <div class="stat-item">
+                <div class="stat-number">5+</div>
+                <div class="stat-label">AI Providers Supported</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">6</div>
+                <div class="stat-label">Core Modules</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Open Source</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Compromises on Privacy</div>
+            </div>
+        </div>
+
+        <!-- ── Story ── -->
+        <section class="section" id="story" aria-labelledby="storyTitle">
+            <p class="section-label">Our Story</p>
+            <h2 class="section-title" id="storyTitle">Where Anviksha came from</h2>
+
+            <div class="story-section">
+                <p>
+                    The word <em>Anviksha</em> (अन्वीक्षा) comes from Sanskrit, meaning <strong>investigation</strong>
+                    or <strong>critical inquiry</strong>. It describes exactly what we set out to build — a tool that
+                    rigorously examines a candidate's knowledge, then reflects that analysis back as actionable growth.
+                </p>
+
+                <blockquote class="story-highlight">
+                    "Most interview prep is either too generic, too expensive, or too stressful. We wanted to build the
+                    thing we wished we had when we were preparing."
+                </blockquote>
+
+                <p>
+                    Anviksha started as an experiment: could a locally-running, privacy-preserving AI genuinely simulate
+                    a technical interview well enough to be useful? After months of iteration — integrating speech
+                    recognition, real-time proctoring, multi-provider LLM routing, and resume OCR parsing — the answer
+                    turned out to be a resounding yes.
+                </p>
+                <p>
+                    Today, Anviksha is a production-ready, fully open-source simulator that any developer, student, or
+                    hiring-prep platform can deploy and extend.
+                </p>
+
+                <div class="tech-strip" role="list" aria-label="Technologies used">
+                    <span class="tech-chip" role="listitem">FastAPI</span>
+                    <span class="tech-chip" role="listitem">OpenAI</span>
+                    <span class="tech-chip" role="listitem">Google Gemini</span>
+                    <span class="tech-chip" role="listitem">Groq</span>
+                    <span class="tech-chip" role="listitem">Anthropic</span>
+                    <span class="tech-chip" role="listitem">Whisper STT</span>
+                    <span class="tech-chip" role="listitem">dlib + OpenCV</span>
+                    <span class="tech-chip" role="listitem">SQLite</span>
+                    <span class="tech-chip" role="listitem">Fernet Encryption</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Values ── -->
+        <section class="section" id="values" aria-labelledby="valuesTitle">
+            <p class="section-label" style="text-align:center;">What We Stand For</p>
+            <h2 class="section-title" id="valuesTitle" style="text-align:center;">Core Values</h2>
+
+            <div class="values-grid">
+                <div class="value-item">
+                    <span class="value-emoji">🧘</span>
+                    <h4>Calm</h4>
+                    <p>Design that reduces anxiety, not adds to it.</p>
+                </div>
+                <div class="value-item">
+                    <span class="value-emoji">🔍</span>
+                    <h4>Rigour</h4>
+                    <p>Evaluations grounded in technical accuracy and depth.</p>
+                </div>
+                <div class="value-item">
+                    <span class="value-emoji">🔓</span>
+                    <h4>Openness</h4>
+                    <p>Fully open-source, free to use, free to fork.</p>
+                </div>
+                <div class="value-item">
+                    <span class="value-emoji">🤝</span>
+                    <h4>Fairness</h4>
+                    <p>Every candidate gets the same quality of preparation.</p>
+                </div>
+                <div class="value-item">
+                    <span class="value-emoji">🌱</span>
+                    <h4>Growth</h4>
+                    <p>Feedback designed to make you better, not just score you.</p>
+                </div>
+                <div class="value-item">
+                    <span class="value-emoji">🛡️</span>
+                    <h4>Privacy</h4>
+                    <p>Your data is yours. We encrypt, we don't harvest.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Team ── -->
+        <section class="section" id="team" aria-labelledby="teamTitle">
+            <p class="section-label">The People</p>
+            <h2 class="section-title" id="teamTitle">Who built Anviksha</h2>
+
+            <!-- Project Guide -->
+            <p
+                style="font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-muted);margin-bottom:1rem;margin-top:0.25rem;">
+                Project Guide</p>
+            <div class="team-grid" style="grid-template-columns: 1fr; max-width: 320px;">
+                <div class="team-card guide-card">
+                    <div class="team-avatar guide-avatar">
+                        <img src="./icons/narendra.png" alt="Er. Narendra Kumar Swami">
+                    </div>
+                    <h3>Er. Narendra Kumar Swami</h3>
+                    <p class="team-role">Faculty Mentor</p>
+                    <p>Assistant Professor, Dept. of Electronics &amp; Communication Engineering</p>
+                </div>
+            </div>
+
+            <!-- Developers -->
+            <p
+                style="font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-muted);margin-bottom:1rem;margin-top:2.5rem;">
+                Developed By</p>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <img src="./icons/ravi.png" alt="Ravi Sharma">
+                    </div>
+                    <h3>Ravi Sharma</h3>
+                    <p class="team-role">B.Tech ECE</p>
+                    <p>Backend architecture, AI integration, and interview flow engine.</p>
+                    <span class="enrol-badge">22EAREC077</span>
+                    <a href="#" class="about-me-btn" id="raviProfileBtn" target="_blank" rel="noopener">
+                        🔗 About Me
+                    </a>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <img src="./icons/devesh.png" alt="Devesh Kumar">
+                    </div>
+                    <h3>Devesh Kumar</h3>
+                    <p class="team-role">B.Tech ECE</p>
+                    <p>Frontend design, Zen Focus UI system, and proctoring pipeline.</p>
+                    <span class="enrol-badge">23EAREC200</span>
+                    <a href="#" class="about-me-btn" id="deveshProfileBtn" target="_blank" rel="noopener">
+                        🔗 About Me
+                    </a>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <img src="./icons/sumit.png" alt="Sumit Tank">
+                    </div>
+                    <h3>Sumit Tank</h3>
+                    <p class="team-role">B.Tech ECE</p>
+                    <p>Speech recognition, resume OCR parsing, and LLM evaluation rubrics.</p>
+                    <span class="enrol-badge">22EAREC102</span>
+                    <a href="#" class="about-me-btn" id="sumitProfileBtn" target="_blank" rel="noopener">
+                        🔗 About Me
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Academic Institution ── -->
+        <section class="section" id="institution" aria-labelledby="institutionTitle">
+            <p class="section-label">Academic Context</p>
+            <h2 class="section-title" id="institutionTitle">Where this project was born</h2>
+
+            <div class="institution-card">
+                <div class="institution-logo">
+                    <img src="./icons/college-logo.png"
+                         alt="Arya College of Engineering &amp; IT – Jaipur"
+                         width="110" height="110">
+                </div>
+                <div class="institution-info">
+                    <h3>Arya College of Engineering &amp; IT</h3>
+                    <p>Jaipur – 302022, Rajasthan, India</p>
+                    <p>Department of Electronics &amp; Communication Engineering</p>
+                    <p style="margin-top:0.4rem;">Affiliated to <strong>Rajasthan Technical University, Kota</strong>
+                    </p>
+                    <div class="institution-meta">
+                        <span class="meta-pill">📅 Session 2025 – 26</span>
+                        <span class="meta-pill">🎓 B.Tech Final Year Project</span>
+                        <span class="meta-pill">🏆 AI &amp; Visual Proctoring</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── CTA ── -->
+        <div class="cta-strip">
+            <h2>Ready to practice?</h2>
+            <p>Start a personalised AI interview session in under two minutes.</p>
+            <div class="cta-buttons">
+                <a href="./guidelines.html" class="btn btn-primary" id="startInterviewBtn">
+                    Start Your Interview →
+                </a>
+                <a href="https://github.com/hackerstoreofficial/Anviksha-The-AI-Interviewer" target="_blank"
+                    rel="noopener noreferrer" class="btn btn-secondary" id="githubLink">
+                    ⭐ Star on GitHub
+                </a>
+            </div>
+        </div>
+
+    </div><!-- end .about-wrapper -->
+</body>
+
+</html>
