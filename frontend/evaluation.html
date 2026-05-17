@@ -105,6 +105,11 @@
                             <div class="stat-value" id="tabSwitches">--</div>
                             <div class="stat-label">Tab Switches</div>
                         </div>
+                        <div class="stat-card" style="grid-column: 1 / -1; background: var(--sage-dark); color: white;">
+                            <div class="stat-icon">ℹ️</div>
+                            <div class="stat-value" id="terminationReason" style="color: white; font-size: 1.1rem;">--</div>
+                            <div class="stat-label" style="color: rgba(255,255,255,0.8);">Interview Status</div>
+                        </div>
                     </div>
                 </div>
 
@@ -240,8 +245,22 @@
                 const seconds = timeSpent % 60;
                 document.getElementById('timeSpent').textContent = `${minutes}m ${seconds}s`;
                 document.getElementById('questionsAnswered').textContent = interviewResults.answers?.length || 10;
-                document.getElementById('gazeViolations').textContent = interviewResults.gazeViolations || 0;
-                document.getElementById('tabSwitches').textContent = interviewResults.tabSwitches || 0;
+
+                // Get gaze violations and tab switches to display accurate numbers
+                const gazeViolationsCount = interviewResults.gazeViolations || 0;
+                const tabSwitchesCount = interviewResults.tabSwitches || 0;
+
+                document.getElementById('gazeViolations').textContent = gazeViolationsCount;
+                document.getElementById('tabSwitches').textContent = tabSwitchesCount;
+
+                // Termination Reason
+                let terminationText = "Completed normally";
+                if (evaluation.termination_reason === 'excessive_gaze_violations' || evaluation.termination_reason === 'gaze_violation') {
+                    terminationText = `Terminated — Gaze violation limit exceeded (${gazeViolationsCount}/5 violations detected)`;
+                } else if (evaluation.termination_reason === 'excessive_tab_switches' || evaluation.termination_reason === 'tab_switch') {
+                    terminationText = `Terminated — Tab switch limit exceeded (switched ${tabSwitchesCount}/2 times)`;
+                }
+                document.getElementById('terminationReason').textContent = terminationText;
 
                 // Strengths
                 const strengthsList = document.getElementById('strengthsList');
@@ -320,6 +339,7 @@ DETAILED SCORES:
 - Relevance & Depth: ${relevanceScore}
 
 INTERVIEW STATISTICS:
+- Interview Status: ${document.getElementById('terminationReason').textContent}
 - Time Spent: ${document.getElementById('timeSpent').textContent}
 - Questions Answered: ${document.getElementById('questionsAnswered').textContent}
 - Gaze Violations: ${document.getElementById('gazeViolations').textContent}

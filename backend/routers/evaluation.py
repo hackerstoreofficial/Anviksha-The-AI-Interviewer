@@ -32,6 +32,7 @@ class EvaluationResponse(BaseModel):
     strengths: List[str]
     improvements: List[str]
     detailed_analysis: str
+    termination_reason: str = None
 
 
 @router.post("/generate")
@@ -161,9 +162,15 @@ async def get_evaluation(
 ):
     """Get evaluation for session"""
     try:
+
         evaluation = await database.get_evaluation(session_id)
         if not evaluation:
             raise HTTPException(status_code=404, detail="Evaluation not found")
+
+        # Get session to get termination reason
+        session = await database.get_session(session_id)
+        termination_reason = session.get('termination_reason') if session else None
+
         
         # Parse detailed feedback
         import json
@@ -176,7 +183,8 @@ async def get_evaluation(
             relevance_score=evaluation['relevance_score'],
             strengths=detailed_feedback.get('strengths', []),
             improvements=detailed_feedback.get('improvements', []),
-            detailed_analysis=detailed_feedback.get('analysis', '')
+            detailed_analysis=detailed_feedback.get('analysis', ''),
+            termination_reason=termination_reason
         )
     
     except Exception as e:

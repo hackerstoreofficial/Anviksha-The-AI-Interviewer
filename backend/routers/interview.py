@@ -65,6 +65,7 @@ class AnswerResponse(BaseModel):
 class EndInterviewRequest(BaseModel):
     """End interview request"""
     session_id: int
+    reason: Optional[str] = None
 
 
 # Store LLM services per session (in-memory for now)
@@ -318,9 +319,13 @@ async def end_interview(
     """End interview session"""
     try:
         # Update session status
+        status = 'terminated' if request.reason and request.reason != 'completed' else 'completed'
+        termination_reason = request.reason if request.reason and request.reason != 'completed' else None
+
         await database.update_session_status(
             request.session_id,
-            status='completed'
+            status=status,
+            termination_reason=termination_reason
         )
         
         # Clean up LLM service

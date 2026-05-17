@@ -226,9 +226,17 @@ async function endInterview(reason) {
     clearInterval(timerInterval);
     clearInterval(window.interviewState.proctoringInterval);
 
+    // Display termination pop-up if due to violation
+    if (reason === 'gaze_violation') {
+        alert('Your interview has been terminated due to exceeding the maximum number of gaze violations (5).');
+    } else if (reason === 'tab_switch') {
+        alert('Your interview has been terminated due to exceeding the maximum number of tab switches (2).');
+    }
+
     try {
+
         // End interview on backend
-        await api.endInterview(window.interviewState.sessionId);
+        await api.endInterview(window.interviewState.sessionId, reason);
 
         // Store session ID for evaluation page
         sessionStorage.setItem('session_id', window.interviewState.sessionId);
