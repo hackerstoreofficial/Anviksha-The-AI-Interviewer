@@ -4,7 +4,7 @@ Evaluation Router - Generate and retrieve interview evaluations
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Any
 import logging  # <--- MOVE THIS TO THE TOP
 
 # INITIALIZE LOGGER GLOBALLY
@@ -32,7 +32,7 @@ class EvaluationResponse(BaseModel):
     strengths: List[str]
     improvements: List[str]
     detailed_analysis: str
-    termination_reason: Optional[str] = None
+    termination_reason: str | None = None
 
 
 @router.post("/generate")
