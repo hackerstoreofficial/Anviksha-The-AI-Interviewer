@@ -242,33 +242,10 @@ async function endInterview(reason) {
         sessionStorage.setItem('session_id', window.interviewState.sessionId);
         sessionStorage.setItem('terminationReason', reason);
 
-        // Store interview results so the evaluation page has accurate stats
-        const elapsedSeconds = (30 * 60) - window.interviewState.timeRemaining;
-        const interviewResults = {
-            timeSpent: elapsedSeconds,
-            answers: window.interviewState.answers,
-            gazeViolations: window.interviewState.gazeViolations,
-            tabSwitches: window.interviewState.tabSwitches
-        };
-        sessionStorage.setItem('interviewResults', JSON.stringify(interviewResults));
-
         // Navigate to evaluation
         window.location.href = 'evaluation.html';
     } catch (error) {
         console.error('End interview error:', error);
-
-        // Still save results even if backend call fails
-        const elapsedSeconds = (30 * 60) - window.interviewState.timeRemaining;
-        const interviewResults = {
-            timeSpent: elapsedSeconds,
-            answers: window.interviewState.answers,
-            gazeViolations: window.interviewState.gazeViolations,
-            tabSwitches: window.interviewState.tabSwitches
-        };
-        sessionStorage.setItem('interviewResults', JSON.stringify(interviewResults));
-        sessionStorage.setItem('session_id', window.interviewState.sessionId);
-        sessionStorage.setItem('terminationReason', reason);
-
         // Navigate anyway
         window.location.href = 'evaluation.html';
     }

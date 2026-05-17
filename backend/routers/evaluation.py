@@ -32,12 +32,7 @@ class EvaluationResponse(BaseModel):
     strengths: List[str]
     improvements: List[str]
     detailed_analysis: str
-    termination_reason: str | None = None
-    # Session statistics
-    time_spent_seconds: int = 0
-    questions_answered: int = 0
-    gaze_violations: int = 0
-    tab_switches: int = 0
+    termination_reason: Optional[str] = None
 
 
 @router.post("/generate")
@@ -68,37 +63,6 @@ async def generate_evaluation(
                     'question': q['question_text'],
                     'answer': answer['answer_text']
                 })
-        
-        # If no answers were given (e.g. terminated early), store a zero-score evaluation
-        if not qa_pairs:
-            termination_reason = session.get('termination_reason', '')
-            if termination_reason:
-                analysis_text = f'The interview was terminated due to: {termination_reason}. No questions were answered, so no performance evaluation could be generated.'
-                improvements_list = ['Complete the full interview to receive a proper evaluation']
-                strengths_list = ['No assessment available — interview was terminated before any answers were submitted']
-            else:
-                analysis_text = 'No questions were answered during this interview session. No performance evaluation could be generated.'
-                improvements_list = ['Attempt to answer the interview questions to receive feedback']
-                strengths_list = ['No assessment available — no answers were provided']
-            
-            await database.create_evaluation(
-                session_id=request.session_id,
-                overall_score=0,
-                technical_score=0,
-                clarity_score=0,
-                relevance_score=0,
-                detailed_feedback={
-                    'strengths': strengths_list,
-                    'improvements': improvements_list,
-                    'analysis': analysis_text
-                }
-            )
-            
-            return {
-                "success": True,
-                "message": "Evaluation generated (no answers provided)",
-                "overall_score": 0
-            }
         
         # Get LLM service from cache, or recreate from stored credentials
         llm_service = get_llm_service(request.session_id)
@@ -147,11 +111,11 @@ async def generate_evaluation(
         
         for qa in qa_pairs:
             eval_result = await llm_service.evaluate_answer(qa['question'], qa['answer'])
-            total_technical += eval_result.get('technical', 0)
-            total_clarity += eval_result.get('clarity', 0)
-            total_relevance += eval_result.get('relevance', 0)
+            total_technical += eval_result.get('technical', 70)
+            total_clarity += eval_result.get('clarity', 70)
+            total_relevance += eval_result.get('relevance', 70)
         
-        num_answers = len(qa_pairs)
+        num_answers = len(qa_pairs) or 1
         technical_score = total_technical / num_answers
         clarity_score = total_clarity / num_answers
         relevance_score = total_relevance / num_answers
@@ -162,7 +126,7 @@ async def generate_evaluation(
             candidate_name=candidate['name']
         )
         
-        overall_score = final_eval.get('overall_score', 0)
+        overall_score = final_eval.get('overall_score', 75)
         
         # Store evaluation
         await database.create_evaluation(
@@ -203,31 +167,9 @@ async def get_evaluation(
         if not evaluation:
             raise HTTPException(status_code=404, detail="Evaluation not found")
 
-        # Get session to get termination reason and stats
+        # Get session to get termination reason
         session = await database.get_session(session_id)
         termination_reason = session.get('termination_reason') if session else None
-
-        # Calculate time spent from session timestamps
-        time_spent_seconds = 0
-        if session:
-            from datetime import datetime
-            start_time = session.get('start_time')
-            end_time = session.get('end_time')
-            if start_time and end_time:
-                try:
-                    start_dt = datetime.fromisoformat(str(start_time))
-                    end_dt = datetime.fromisoformat(str(end_time))
-                    time_spent_seconds = int((end_dt - start_dt).total_seconds())
-                except (ValueError, TypeError):
-                    time_spent_seconds = 0
-
-        # Count questions actually answered from the database
-        answers = await database.get_session_answers(session_id)
-        questions_answered = len(answers) if answers else 0
-
-        # Get violation counts from the database
-        gaze_violations = session.get('gaze_violations', 0) if session else 0
-        tab_switches = session.get('tab_switch_count', 0) if session else 0
 
         
         # Parse detailed feedback
@@ -242,11 +184,7 @@ async def get_evaluation(
             strengths=detailed_feedback.get('strengths', []),
             improvements=detailed_feedback.get('improvements', []),
             detailed_analysis=detailed_feedback.get('analysis', ''),
-            termination_reason=termination_reason,
-            time_spent_seconds=time_spent_seconds,
-            questions_answered=questions_answered,
-            gaze_violations=gaze_violations,
-            tab_switches=tab_switches
+            termination_reason=termination_reason
         )
     
     except Exception as e:
