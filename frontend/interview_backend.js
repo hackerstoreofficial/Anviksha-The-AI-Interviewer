@@ -278,7 +278,7 @@ async function endInterview(reason) {
 globalThis.addEventListener('load', async () => {
     try {
         // Get candidate ID and API config
-        globalThis.interviewState.candidateId = parseInt(sessionStorage.getItem('candidate_id'));
+        globalThis.interviewState.candidateId = Number.parseInt(sessionStorage.getItem('candidate_id'));
         const apiConfigStr = sessionStorage.getItem('apiConfig');
 
         if (!globalThis.interviewState.candidateId || !apiConfigStr) {
