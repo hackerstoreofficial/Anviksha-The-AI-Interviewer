@@ -311,9 +311,9 @@
             <a class="site-header__brand" href="./index.html" id="headerBrandLink" aria-label="Anviksha home">
                 <div class="site-header__brand-icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                        <path d="M2 17l10 5 10-5"/>
-                        <path d="M2 12l10 5 10-5"/>
+                        <ellipse cx="12" cy="7" rx="10" ry="5"/>
+                        <path d="M2 17a10 5 0 0 0 20 0"/>
+                        <path d="M2 12a10 5 0 0 0 20 0"/>
                     </svg>
                 </div>
                 <span class="site-header__brand-name">Anviksha</span>
