@@ -4,8 +4,8 @@
 // Load API helper
 // <script src="api.js"></script> should be added to HTML
 
-// Interview State - Using window.interviewState to avoid conflicts
-window.interviewState = window.interviewState || {
+// Interview State - Using globalThis.interviewState to avoid conflicts
+globalThis.interviewState = globalThis.interviewState || {
     sessionId: null,
     candidateId: null,
     currentQuestionId: null,
@@ -26,15 +26,15 @@ let timerInterval;
 
 function startTimer() {
     timerInterval = setInterval(() => {
-        window.interviewState.timeRemaining--;
+        globalThis.interviewState.timeRemaining--;
 
-        const minutes = Math.floor(window.interviewState.timeRemaining / 60);
-        const seconds = window.interviewState.timeRemaining % 60;
+        const minutes = Math.floor(globalThis.interviewState.timeRemaining / 60);
+        const seconds = globalThis.interviewState.timeRemaining % 60;
 
         document.getElementById('timerMinutes').textContent = String(minutes).padStart(2, '0');
         document.getElementById('timerSeconds').textContent = String(seconds).padStart(2, '0');
 
-        if (window.interviewState.timeRemaining <= 0) {
+        if (globalThis.interviewState.timeRemaining <= 0) {
             endInterview('time_limit');
         }
     }, 1000);
@@ -56,12 +56,12 @@ async function setupCamera() {
             startProctoring();
         } else {
             alert('Camera permission required. Redirecting to permissions page...');
-            window.location.href = 'permissions.html';
+            globalThis.location.href = 'permissions.html';
         }
     } catch (err) {
         console.error('Camera access error:', err);
         alert('Failed to access camera. Please check permissions.');
-        window.location.href = 'permissions.html';
+        globalThis.location.href = 'permissions.html';
     }
 }
 
@@ -71,8 +71,8 @@ function startProctoring() {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
 
-    window.interviewState.proctoringInterval = setInterval(async () => {
-        if (!window.interviewState.sessionId) return;
+    globalThis.interviewState.proctoringInterval = setInterval(async () => {
+        if (!globalThis.interviewState.sessionId) return;
 
         try {
             // Capture frame
@@ -83,11 +83,11 @@ function startProctoring() {
             // Convert to blob
             canvas.toBlob(async (blob) => {
                 try {
-                    const result = await api.sendProctoringFrame(window.interviewState.sessionId, blob);
+                    const result = await api.sendProctoringFrame(globalThis.interviewState.sessionId, blob);
 
                     // Always update violation count from backend
-                    window.interviewState.gazeViolations = result.violation_count;
-                    document.getElementById('gazeCount').textContent = window.interviewState.gazeViolations;
+                    globalThis.interviewState.gazeViolations = result.violation_count;
+                    document.getElementById('gazeCount').textContent = globalThis.interviewState.gazeViolations;
 
                     // Show alert if violation detected
                     if (result.violation_detected) {
@@ -111,11 +111,11 @@ function startProctoring() {
 
 // Tab Switch Detection
 document.addEventListener('visibilitychange', async () => {
-    if (document.hidden && window.interviewState.sessionId) {
+    if (document.hidden && globalThis.interviewState.sessionId) {
         try {
-            const result = await api.logTabSwitch(window.interviewState.sessionId);
-            window.interviewState.tabSwitches = result.total_tab_switches;
-            document.getElementById('tabCount').textContent = window.interviewState.tabSwitches;
+            const result = await api.logTabSwitch(globalThis.interviewState.sessionId);
+            globalThis.interviewState.tabSwitches = result.total_tab_switches;
+            document.getElementById('tabCount').textContent = globalThis.interviewState.tabSwitches;
 
             if (result.should_terminate) {
                 endInterview('tab_switch');
@@ -131,7 +131,7 @@ document.addEventListener('visibilitychange', async () => {
 
 // Recording Controls
 document.getElementById('recordBtn').addEventListener('click', async () => {
-    if (window.whisperSTT && await window.whisperSTT.start()) {
+    if (globalThis.whisperSTT && await globalThis.whisperSTT.start()) {
         document.getElementById('recordBtn').classList.add('hidden');
         document.getElementById('stopRecordBtn').classList.remove('hidden');
         document.getElementById('recordingIndicator').classList.remove('hidden');
@@ -141,8 +141,8 @@ document.getElementById('recordBtn').addEventListener('click', async () => {
 });
 
 document.getElementById('stopRecordBtn').addEventListener('click', () => {
-    if (window.whisperSTT) {
-        window.whisperSTT.stop();
+    if (globalThis.whisperSTT) {
+        globalThis.whisperSTT.stop();
         document.getElementById('recordBtn').classList.remove('hidden');
         document.getElementById('stopRecordBtn').classList.add('hidden');
         document.getElementById('recordingIndicator').classList.add('hidden');
@@ -155,12 +155,12 @@ document.getElementById('speakQuestionBtn').addEventListener('click', () => {
     const utterance = new SpeechSynthesisUtterance(questionText);
     utterance.rate = 0.9;
     utterance.pitch = 1;
-    window.speechSynthesis.speak(utterance);
+    globalThis.speechSynthesis.speak(utterance);
 });
 
 // Submit Answer
 document.getElementById('submitAnswerBtn').addEventListener('click', async () => {
-    if (!window.interviewState.currentQuestionId) return;
+    if (!globalThis.interviewState.currentQuestionId) return;
 
     try {
         // Disable button
@@ -169,13 +169,13 @@ document.getElementById('submitAnswerBtn').addEventListener('click', async () =>
 
         // Submit answer
         await api.submitAnswer(
-            window.interviewState.currentQuestionId,
-            window.interviewState.currentTranscript,
+            globalThis.interviewState.currentQuestionId,
+            globalThis.interviewState.currentTranscript,
             15.0 // Approximate duration
         );
 
         // Move to next question or end
-        if (window.interviewState.questionNumber < window.interviewState.totalQuestions) {
+        if (globalThis.interviewState.questionNumber < globalThis.interviewState.totalQuestions) {
             await loadNextQuestion();
         } else {
             endInterview('completed');
@@ -190,10 +190,10 @@ document.getElementById('submitAnswerBtn').addEventListener('click', async () =>
 
 async function loadNextQuestion() {
     try {
-        window.interviewState.questionNumber++;
-        window.interviewState.currentTranscript = '';
+        globalThis.interviewState.questionNumber++;
+        globalThis.interviewState.currentTranscript = '';
 
-        document.getElementById('questionNumber').textContent = window.interviewState.questionNumber;
+        document.getElementById('questionNumber').textContent = globalThis.interviewState.questionNumber;
         document.getElementById('liveTranscript').textContent = '';
         document.getElementById('liveTranscript').classList.add('hidden');
         document.getElementById('transcriptPlaceholder').classList.remove('hidden');
@@ -204,9 +204,9 @@ async function loadNextQuestion() {
         document.getElementById('questionText').innerHTML = '<p class="breathe-animation">Loading next question...</p>';
 
         // Get next question from backend
-        const result = await api.getNextQuestion(window.interviewState.sessionId);
+        const result = await api.getNextQuestion(globalThis.interviewState.sessionId);
 
-        window.interviewState.currentQuestionId = result.question_id;
+        globalThis.interviewState.currentQuestionId = result.question_id;
         document.getElementById('questionText').innerHTML = `<p>${result.question_text}</p>`;
 
     } catch (error) {
@@ -224,39 +224,70 @@ document.getElementById('endInterviewBtn').addEventListener('click', () => {
 
 async function endInterview(reason) {
     clearInterval(timerInterval);
-    clearInterval(window.interviewState.proctoringInterval);
+    clearInterval(globalThis.interviewState.proctoringInterval);
+
+    // Display termination pop-up if due to violation
+    if (reason === 'gaze_violation') {
+        alert('Your interview has been terminated due to exceeding the maximum number of gaze violations (5).');
+    } else if (reason === 'tab_switch') {
+        alert('Your interview has been terminated due to exceeding the maximum number of tab switches (2).');
+    }
 
     try {
+
         // End interview on backend
-        await api.endInterview(window.interviewState.sessionId);
+        await api.endInterview(globalThis.interviewState.sessionId, reason);
 
         // Store session ID for evaluation page
-        sessionStorage.setItem('session_id', window.interviewState.sessionId);
+        sessionStorage.setItem('session_id', globalThis.interviewState.sessionId);
         sessionStorage.setItem('terminationReason', reason);
 
+        // Store interview results so the evaluation page has accurate stats
+        const elapsedSeconds = (30 * 60) - globalThis.interviewState.timeRemaining;
+        const interviewResults = {
+            timeSpent: elapsedSeconds,
+            answers: globalThis.interviewState.answers,
+            gazeViolations: globalThis.interviewState.gazeViolations,
+            tabSwitches: globalThis.interviewState.tabSwitches
+        };
+        sessionStorage.setItem('interviewResults', JSON.stringify(interviewResults));
+
         // Navigate to evaluation
-        window.location.href = 'evaluation.html';
+        globalThis.location.href = 'evaluation.html';
     } catch (error) {
         console.error('End interview error:', error);
+
+        // Still save results even if backend call fails
+        const elapsedSeconds = (30 * 60) - globalThis.interviewState.timeRemaining;
+        const interviewResults = {
+            timeSpent: elapsedSeconds,
+            answers: globalThis.interviewState.answers,
+            gazeViolations: globalThis.interviewState.gazeViolations,
+            tabSwitches: globalThis.interviewState.tabSwitches
+        };
+        sessionStorage.setItem('interviewResults', JSON.stringify(interviewResults));
+        sessionStorage.setItem('session_id', globalThis.interviewState.sessionId);
+        sessionStorage.setItem('terminationReason', reason);
+
         // Navigate anyway
-        window.location.href = 'evaluation.html';
+        globalThis.location.href = 'evaluation.html';
     }
 }
 
 // Initialize Interview
-window.addEventListener('load', async () => {
+globalThis.addEventListener('load', async () => {
     try {
         // Get candidate ID and API config
-        window.interviewState.candidateId = parseInt(sessionStorage.getItem('candidate_id'));
+        globalThis.interviewState.candidateId = Number.parseInt(sessionStorage.getItem('candidate_id'));
         const apiConfigStr = sessionStorage.getItem('apiConfig');
 
-        if (!window.interviewState.candidateId || !apiConfigStr) {
+        if (!globalThis.interviewState.candidateId || !apiConfigStr) {
             alert('Missing candidate or API configuration. Redirecting...');
-            window.location.href = 'profile.html';
+            globalThis.location.href = 'profile.html';
             return;
         }
 
-        window.interviewState.apiConfig = JSON.parse(apiConfigStr);
+        globalThis.interviewState.apiConfig = JSON.parse(apiConfigStr);
 
         // Setup camera
         await setupCamera();
@@ -269,14 +300,14 @@ window.addEventListener('load', async () => {
 
         // Start interview on backend
         const result = await api.startInterview(
-            window.interviewState.candidateId,
-            window.interviewState.apiConfig.provider,
-            window.interviewState.apiConfig.key
+            globalThis.interviewState.candidateId,
+            globalThis.interviewState.apiConfig.provider,
+            globalThis.interviewState.apiConfig.key
         );
 
-        window.interviewState.sessionId = result.session_id;
-        window.interviewState.currentQuestionId = result.question_id;
-        window.interviewState.totalQuestions = result.total_questions;
+        globalThis.interviewState.sessionId = result.session_id;
+        globalThis.interviewState.currentQuestionId = result.question_id;
+        globalThis.interviewState.totalQuestions = result.total_questions;
 
         // Display first question
         document.getElementById('questionText').innerHTML = `<p>${result.first_question}</p>`;
@@ -292,6 +323,6 @@ window.addEventListener('load', async () => {
             alert(`Failed to start interview: ${error.message}`);
         }
 
-        window.location.href = 'permissions.html';
+        globalThis.location.href = 'permissions.html';
     }
 });

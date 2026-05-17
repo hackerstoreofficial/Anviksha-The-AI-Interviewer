@@ -76,11 +76,14 @@ const api = {
         return response.json();
     },
 
-    async endInterview(sessionId) {
+    async endInterview(sessionId, reason = null) {
+        const body = { session_id: sessionId };
+        if (reason) body.reason = reason;
+
         const response = await fetch(`${API_BASE_URL}/api/interview/end`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ session_id: sessionId })
+            body: JSON.stringify(body)
         });
         if (!response.ok) throw new Error(await response.text());
         return response.json();

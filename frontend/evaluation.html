@@ -30,8 +30,8 @@
         <!-- Main Content -->
         <div class="content-card">
             <div style="max-width: 1000px; margin: 0 auto;">
-                <h1 class="text-center mb-sm">Interview Complete! 🎉</h1>
-                <p class="text-center text-muted mb-xl">
+                <h1 class="text-center mb-sm" id="pageHeading">Interview Complete! 🎉</h1>
+                <p class="text-center text-muted mb-xl" id="pageSubheading">
                     <em>Here's your comprehensive performance analysis</em>
                 </p>
 
@@ -104,6 +104,11 @@
                             <div class="stat-icon">🔄</div>
                             <div class="stat-value" id="tabSwitches">--</div>
                             <div class="stat-label">Tab Switches</div>
+                        </div>
+                        <div class="stat-card" id="terminationCard" style="grid-column: 1 / -1; background: var(--sage-dark); color: white;">
+                            <div class="stat-icon">ℹ️</div>
+                            <div class="stat-value" id="terminationReason" style="color: white; font-size: 1.1rem;">--</div>
+                            <div class="stat-label" style="color: rgba(255,255,255,0.8);">Interview Status</div>
                         </div>
                     </div>
                 </div>
@@ -233,15 +238,48 @@
                 animateBar('clarityBar', 'clarityScore', evaluation.clarity_score || 0);
                 animateBar('relevanceBar', 'relevanceScore', evaluation.relevance_score || 0);
 
-                // Interview stats (from stored results)
+                // Interview stats — prefer backend data, fall back to sessionStorage
                 const interviewResults = JSON.parse(sessionStorage.getItem('interviewResults') || '{}');
-                const timeSpent = interviewResults.timeSpent || 1800;
+
+                // Time spent: use backend-calculated time, fall back to sessionStorage, never default to 1800
+                const timeSpent = evaluation.time_spent_seconds || interviewResults.timeSpent || 0;
                 const minutes = Math.floor(timeSpent / 60);
                 const seconds = timeSpent % 60;
                 document.getElementById('timeSpent').textContent = `${minutes}m ${seconds}s`;
-                document.getElementById('questionsAnswered').textContent = interviewResults.answers?.length || 10;
-                document.getElementById('gazeViolations').textContent = interviewResults.gazeViolations || 0;
-                document.getElementById('tabSwitches').textContent = interviewResults.tabSwitches || 0;
+
+                // Questions answered: use backend count (actual answers in DB), fall back to sessionStorage
+                const questionsAnswered = evaluation.questions_answered ?? interviewResults.answers?.length ?? 0;
+                document.getElementById('questionsAnswered').textContent = questionsAnswered;
+
+                // Gaze violations: use backend DB count, fall back to sessionStorage
+                const gazeViolationsCount = evaluation.gaze_violations ?? interviewResults.gazeViolations ?? 0;
+                const tabSwitchesCount = evaluation.tab_switches ?? interviewResults.tabSwitches ?? 0;
+
+                document.getElementById('gazeViolations').textContent = gazeViolationsCount;
+                document.getElementById('tabSwitches').textContent = tabSwitchesCount;
+
+                // Termination Reason — use backend termination_reason or sessionStorage reason
+                const reason = evaluation.termination_reason || sessionStorage.getItem('terminationReason');
+                let terminationText = "Completed normally";
+                if (reason === 'excessive_gaze_violations' || reason === 'gaze_violation') {
+                    terminationText = `⚠️ Terminated — Gaze violation limit exceeded (${gazeViolationsCount}/5 violations detected)`;
+                } else if (reason === 'excessive_tab_switches' || reason === 'tab_switch') {
+                    terminationText = `⚠️ Terminated — Tab switch limit exceeded (${tabSwitchesCount}/2 switches detected)`;
+                } else if (reason === 'time_limit') {
+                    terminationText = `⏰ Terminated — Time limit reached`;
+                } else if (reason === 'user_ended') {
+                    terminationText = `Interview ended early by candidate`;
+                }
+                document.getElementById('terminationReason').textContent = terminationText;
+
+                // Color the termination card red if terminated due to violations
+                const terminationCard = document.getElementById('terminationCard');
+                if (reason && reason !== 'completed' && reason !== null) {
+                    terminationCard.style.background = '#dc2626';
+                    // Update page heading to reflect termination
+                    document.getElementById('pageHeading').textContent = 'Interview Terminated ⚠️';
+                    document.getElementById('pageSubheading').innerHTML = '<em>Your interview was ended early due to a violation</em>';
+                }
 
                 // Strengths
                 const strengthsList = document.getElementById('strengthsList');
@@ -320,6 +358,7 @@ DETAILED SCORES:
 - Relevance & Depth: ${relevanceScore}
 
 INTERVIEW STATISTICS:
+- Interview Status: ${document.getElementById('terminationReason').textContent}
 - Time Spent: ${document.getElementById('timeSpent').textContent}
 - Questions Answered: ${document.getElementById('questionsAnswered').textContent}
 - Gaze Violations: ${document.getElementById('gazeViolations').textContent}
