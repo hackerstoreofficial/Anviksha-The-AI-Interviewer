@@ -258,7 +258,9 @@
 
     /* Push page content below the sticky header ----------------------- */
     body.has-site-header .page-wrapper,
-    body.has-site-header .about-wrapper {
+    body.has-site-header .about-wrapper,
+    body.has-site-header .guide-wrapper,
+    body.has-site-header .donate-wrapper {
         /* header is 60px; the sticky positioning handles the rest */
     }
     `;
@@ -270,8 +272,10 @@
 
     /* ── Nav items config ─────────────────────────────────────────── */
     const navItems = [
-        { label: 'Home',     icon: '🏠', href: './index.html' },
-        { label: 'About Us', icon: '✨', href: './about.html' },
+        { label: 'Home',      icon: '🏠', href: './index.html' },
+        { label: 'About Us',  icon: '✨', href: './about.html' },
+        { label: 'API Guide', icon: '🔑', href: './api-guide.html' },
+        { label: 'Support',   icon: '💚', href: './donate.html' },
     ];
 
     /* Detect active page by comparing the current filename */

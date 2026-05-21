@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Support Anviksha – Help us keep AI-powered interview preparation free, open-source, and accessible to every candidate.">
+    <title>Support Us – Anviksha AI Interview Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* ── Page-level layout ── */
+        .donate-wrapper {
+            min-height: 100vh;
+            background: var(--cream-bg);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            text-align: center;
+            padding: 5rem 2rem 3rem;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--sage-light);
+            color: var(--sage-dark);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.4rem 1.1rem;
+            border-radius: var(--radius-pill);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.6s ease both;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 1.25rem;
+            animation: fadeInUp 0.7s ease 0.1s both;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--sage-dark);
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--gray-muted);
+            line-height: 1.8;
+            font-weight: 300;
+            animation: fadeInUp 0.7s ease 0.2s both;
+            margin-bottom: 0;
+        }
+
+        /* ── Section wrapper ── */
+        .section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--sage-dark);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 1.25rem;
+            color: var(--slate-text);
+        }
+
+        .section-subtitle {
+            font-size: 1rem;
+            color: var(--gray-muted);
+            line-height: 1.7;
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        /* ── Divider ── */
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--sage-dark), transparent);
+            margin: 0 auto 3rem;
+            border-radius: 2px;
+        }
+
+        /* ── Donation cards grid ── */
+        .donate-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.75rem;
+            margin-top: 2rem;
+        }
+
+        .donate-card {
+            background: var(--white);
+            border: 1px solid rgba(139, 175, 139, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 0;
+            box-shadow: var(--shadow-soft);
+            transition: all var(--transition-medium);
+            animation: fadeInUp 0.6s ease both;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .donate-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(139, 175, 139, 0.5);
+        }
+
+        .donate-card:nth-child(1) { animation-delay: 0.1s; }
+        .donate-card:nth-child(2) { animation-delay: 0.2s; }
+        .donate-card:nth-child(3) { animation-delay: 0.3s; }
+
+        /* Card header strip */
+        .donate-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.75rem 1.75rem 1rem;
+        }
+
+        .donate-card-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+
+        .donate-card-icon.coffee { background: #fff8e1; }
+        .donate-card-icon.upi    { background: #e8f5e9; }
+        .donate-card-icon.github { background: #f3e5f5; }
+
+        .donate-card-header h3 {
+            font-family: var(--font-sans);
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.1rem;
+            color: var(--slate-text);
+        }
+
+        .donate-card-header .donate-tagline {
+            font-size: 0.82rem;
+            color: var(--gray-muted);
+            margin: 0;
+            font-weight: 400;
+        }
+
+        /* Card body */
+        .donate-card-body {
+            padding: 0.5rem 1.75rem 1.75rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .donate-card-body p {
+            font-size: 0.92rem;
+            color: var(--gray-muted);
+            line-height: 1.7;
+            font-weight: 300;
+            margin-bottom: 1.25rem;
+        }
+
+        /* CTA button inside cards */
+        .donate-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.5rem;
+            border-radius: var(--radius-pill);
+            background: var(--sage-dark);
+            color: var(--white) !important;
+            font-size: 0.88rem;
+            font-weight: 600;
+            text-decoration: none !important;
+            border: none !important;
+            border-bottom: none !important;
+            transition: all var(--transition-fast);
+            box-shadow: 0 2px 10px rgba(139, 175, 139, 0.3);
+            cursor: pointer;
+            margin-top: auto;
+            align-self: flex-start;
+        }
+
+        .donate-cta:hover {
+            background: #7a9e7a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 175, 139, 0.4);
+        }
+
+        .donate-cta.outline {
+            background: transparent;
+            color: var(--sage-dark) !important;
+            border: 1.5px solid var(--sage-dark) !important;
+            box-shadow: none;
+        }
+
+        .donate-cta.outline:hover {
+            background: var(--sage-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        /* ── UPI Section ── */
+        .upi-area {
+            margin-bottom: 1.25rem;
+        }
+
+        .qr-placeholder {
+            width: 160px;
+            height: 160px;
+            background: var(--sage-light);
+            border: 2px dashed var(--sage-medium);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: var(--sage-dark);
+            font-size: 0.78rem;
+            font-weight: 500;
+            text-align: center;
+            padding: 0.5rem;
+            transition: all var(--transition-medium);
+        }
+
+        .qr-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: calc(var(--radius-md) - 4px);
+        }
+
+        .upi-id-box {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--sage-light);
+            border: 1px solid rgba(139, 175, 139, 0.3);
+            border-radius: var(--radius-sm);
+            padding: 0.6rem 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .upi-id-box code {
+            flex: 1;
+            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 0.88rem;
+            color: var(--slate-text);
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .copy-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: var(--radius-pill);
+            border: 1px solid var(--sage-dark);
+            background: var(--white);
+            color: var(--sage-dark);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            background: var(--sage-dark);
+            color: var(--white);
+        }
+
+        .copy-btn.copied {
+            background: var(--sage-dark);
+            color: var(--white);
+            border-color: var(--sage-dark);
+        }
+
+        .upi-note {
+            font-size: 0.78rem;
+            color: var(--gray-muted);
+            margin: 0.5rem 0 0;
+            font-style: italic;
+        }
+
+        /* ── Transparency section ── */
+        .transparency-section {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-soft);
+            padding: 3rem;
+            margin: 0 2rem;
+            max-width: 860px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .transparency-section h3 {
+            font-family: var(--font-serif);
+            font-size: 1.3rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            color: var(--slate-text);
+        }
+
+        .usage-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(139, 175, 139, 0.12);
+        }
+
+        .usage-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .usage-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: var(--radius-sm);
+            background: var(--sage-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .usage-content h4 {
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--slate-text);
+        }
+
+        .usage-content p {
+            font-size: 0.88rem;
+            color: var(--gray-muted);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* ── Thank-you note ── */
+        .thankyou-banner {
+            background: linear-gradient(135deg, var(--sage-dark) 0%, #6a9e6a 100%);
+            color: var(--white);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem 2rem;
+            margin: 0 2rem;
+            max-width: 860px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .thankyou-banner h3 {
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            font-weight: 300;
+            margin-bottom: 0.75rem;
+            color: var(--white);
+        }
+
+        .thankyou-banner p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            line-height: 1.7;
+            margin: 0;
+            font-weight: 300;
+        }
+
+        /* ── CTA footer strip ── */
+        .cta-strip {
+            text-align: center;
+            padding: 4rem 2rem 5rem;
+        }
+
+        .cta-strip h2 {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .cta-strip p {
+            color: var(--gray-muted);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .donate-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .transparency-section {
+                padding: 2rem 1.5rem;
+                margin: 0 1rem;
+            }
+
+            .thankyou-banner {
+                margin: 0 1rem;
+                padding: 2rem 1.5rem;
+            }
+
+            .section {
+                padding: 2.5rem 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .donate-card-header {
+                padding: 1.25rem 1.25rem 0.75rem;
+            }
+
+            .donate-card-body {
+                padding: 0.5rem 1.25rem 1.25rem;
+            }
+
+            .upi-id-box {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.5rem;
+            }
+
+            .copy-btn {
+                align-self: flex-start;
+            }
+        }
+    </style>
+    <link rel="icon" type="image/svg+xml" href="./icons/favicon.svg">
+</head>
+
+<body>
+    <!-- Shared site header (nav) -->
+    <script src="./header.js"></script>
+    <div class="donate-wrapper">
+
+        <!-- Background Decorations -->
+        <div class="bg-blob bg-blob-1"></div>
+        <div class="bg-blob bg-blob-2"></div>
+
+        <!-- ── Hero ── -->
+        <header class="hero">
+            <div class="hero-badge">💚 Support</div>
+            <h1>Support <em>Anviksha</em></h1>
+            <p class="hero-subtitle">
+                Anviksha is free, open-source, and built with love. If it has helped you prepare
+                for interviews, consider supporting the project so we can keep it running and improving.
+            </p>
+        </header>
+
+        <div class="divider"></div>
+
+        <!-- ── Donation Options ── -->
+        <section class="section" id="donateOptions" aria-labelledby="donateTitle">
+            <p class="section-label" style="text-align: center;">Ways to Contribute</p>
+            <h2 class="section-title" id="donateTitle" style="text-align: center;">Choose how you'd like to help</h2>
+            <p class="section-subtitle" style="text-align: center;">
+                Every contribution, big or small, directly supports development, hosting, and keeping Anviksha free for everyone.
+            </p>
+
+            <div class="donate-grid">
+
+                <!-- Card 1 — Buy Me a Coffee -->
+                <div class="donate-card" id="coffeeCard">
+                    <div class="donate-card-header">
+                        <div class="donate-card-icon coffee">☕</div>
+                        <div>
+                            <h3>Buy Me a Coffee</h3>
+                            <p class="donate-tagline">Quick & global</p>
+                        </div>
+                    </div>
+                    <div class="donate-card-body">
+                        <p>
+                            Support us with a one-time coffee — takes 30 seconds. Works worldwide with
+                            cards, Apple Pay, Google Pay, and PayPal.
+                        </p>
+                        <a href="https://buymeacoffee.com/your_username"
+                           target="_blank" rel="noopener noreferrer"
+                           class="donate-cta" id="coffeeBtn">
+                            ☕ Buy a Coffee →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 2 — UPI (India) -->
+                <div class="donate-card" id="upiCard">
+                    <div class="donate-card-header">
+                        <div class="donate-card-icon upi">🇮🇳</div>
+                        <div>
+                            <h3>UPI Payment</h3>
+                            <p class="donate-tagline">Instant · India only</p>
+                        </div>
+                    </div>
+                    <div class="donate-card-body">
+                        <div class="upi-area">
+                            <div class="qr-placeholder" id="upiQrArea">
+                                <!-- Replace the text below with an <img> tag pointing to your QR code -->
+                                Scan to pay<br>via any UPI app
+                            </div>
+                            <div class="upi-id-box">
+                                <code id="upiIdText">yourname@upi</code>
+                                <button class="copy-btn" id="copyUpiBtn" onclick="copyUPI()">
+                                    📋 Copy
+                                </button>
+                            </div>
+                            <p class="upi-note">Works with GPay, PhonePe, Paytm, BHIM, and all UPI apps.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 — GitHub Sponsors -->
+                <div class="donate-card" id="githubCard">
+                    <div class="donate-card-header">
+                        <div class="donate-card-icon github">💜</div>
+                        <div>
+                            <h3>GitHub Sponsors</h3>
+                            <p class="donate-tagline">Recurring or one-time</p>
+                        </div>
+                    </div>
+                    <div class="donate-card-body">
+                        <p>
+                            Sponsor us directly through GitHub. Set up a monthly contribution or make a
+                            one-time donation — your profile will appear as a supporter.
+                        </p>
+                        <a href="https://github.com/sponsors/hackerstoreofficial"
+                           target="_blank" rel="noopener noreferrer"
+                           class="donate-cta outline" id="githubSponsorBtn">
+                            💜 Sponsor on GitHub
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ── Where your money goes ── -->
+        <section class="section" style="padding-top: 0;">
+            <div class="transparency-section">
+                <h3>🌱 Where your support goes</h3>
+
+                <div class="usage-item">
+                    <div class="usage-icon">🖥️</div>
+                    <div class="usage-content">
+                        <h4>Server & Hosting</h4>
+                        <p>Keeping the backend, demo instances, and APIs running reliably for all users.</p>
+                    </div>
+                </div>
+
+                <div class="usage-item">
+                    <div class="usage-icon">🧠</div>
+                    <div class="usage-content">
+                        <h4>AI Model Access</h4>
+                        <p>Covering API costs for LLM evaluation, speech-to-text, and advanced interview features.</p>
+                    </div>
+                </div>
+
+                <div class="usage-item">
+                    <div class="usage-icon">🛠️</div>
+                    <div class="usage-content">
+                        <h4>Development</h4>
+                        <p>Funding new features, bug fixes, better proctoring models, and continuous improvement.</p>
+                    </div>
+                </div>
+
+                <div class="usage-item">
+                    <div class="usage-icon">📖</div>
+                    <div class="usage-content">
+                        <h4>Documentation & Community</h4>
+                        <p>Creating guides, tutorials, and onboarding resources for contributors and users.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Thank-you banner ── -->
+        <section class="section" style="padding-top: 0;">
+            <div class="thankyou-banner">
+                <h3>Thank you for believing in open education 🙏</h3>
+                <p>
+                    Anviksha exists because of people like you. Whether you contribute code, share the project
+                    with a friend, or support us financially — every bit makes a difference.
+                </p>
+            </div>
+        </section>
+
+        <!-- ── CTA ── -->
+        <div class="cta-strip">
+            <h2>Ready to practice?</h2>
+            <p>Start a personalised AI interview session in under two minutes.</p>
+            <div class="cta-buttons">
+                <a href="./guidelines.html" class="btn btn-primary" id="startInterviewBtn">
+                    Start Your Interview →
+                </a>
+            </div>
+        </div>
+
+    </div><!-- end .donate-wrapper -->
+
+    <script>
+        /**
+         * Copy the UPI ID to clipboard and show visual feedback.
+         */
+        function copyUPI() {
+            const upiText = document.getElementById('upiIdText').textContent;
+            const btn = document.getElementById('copyUpiBtn');
+
+            navigator.clipboard.writeText(upiText).then(() => {
+                btn.innerHTML = '✓ Copied!';
+                btn.classList.add('copied');
+
+                setTimeout(() => {
+                    btn.innerHTML = '📋 Copy';
+                    btn.classList.remove('copied');
+                }, 2000);
+            }).catch(() => {
+                /* Fallback for older browsers */
+                const textarea = document.createElement('textarea');
+                textarea.value = upiText;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+
+                btn.innerHTML = '✓ Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.innerHTML = '📋 Copy';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+
+</html>
