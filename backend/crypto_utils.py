@@ -7,6 +7,7 @@ import logging
 from cryptography.fernet import Fernet
 import base64
 import hashlib
+from .config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -16,8 +17,8 @@ class CryptoService:
     
     def __init__(self):
         """Initialize crypto service with encryption key"""
-        # Get encryption key from environment or generate one
-        encryption_key = os.environ.get('ENCRYPTION_KEY')
+        # Get encryption key from settings (which loads from environment or .env file)
+        encryption_key = settings.ENCRYPTION_KEY or os.environ.get('ENCRYPTION_KEY')
         
         if not encryption_key:
             logger.error("ENCRYPTION_KEY not set in environment. A secure key is required.")
