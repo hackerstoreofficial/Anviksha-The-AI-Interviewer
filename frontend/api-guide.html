@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="API Key Guide – Learn how to generate API keys for Groq, OpenAI, Google Gemini, and OpenRouter to power your Anviksha AI interview sessions.">
+    <title>API Key Guide – Anviksha AI Interview Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* ── Page-level layout ── */
+        .guide-wrapper {
+            min-height: 100vh;
+            background: var(--cream-bg);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            text-align: center;
+            padding: 5rem 2rem 3rem;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--sage-light);
+            color: var(--sage-dark);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.4rem 1.1rem;
+            border-radius: var(--radius-pill);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.6s ease both;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 1.25rem;
+            animation: fadeInUp 0.7s ease 0.1s both;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--sage-dark);
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--gray-muted);
+            line-height: 1.8;
+            font-weight: 300;
+            animation: fadeInUp 0.7s ease 0.2s both;
+            margin-bottom: 0;
+        }
+
+        /* ── Section wrapper ── */
+        .section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--sage-dark);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 1.25rem;
+            color: var(--slate-text);
+        }
+
+        .section-subtitle {
+            font-size: 1rem;
+            color: var(--gray-muted);
+            line-height: 1.7;
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        /* ── Divider ── */
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--sage-dark), transparent);
+            margin: 0 auto 3rem;
+            border-radius: 2px;
+        }
+
+        /* ── Provider cards ── */
+        .provider-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 1.75rem;
+            margin-top: 2rem;
+        }
+
+        .provider-card {
+            background: var(--white);
+            border: 1px solid rgba(139, 175, 139, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 0;
+            box-shadow: var(--shadow-soft);
+            transition: all var(--transition-medium);
+            animation: fadeInUp 0.6s ease both;
+            overflow: hidden;
+        }
+
+        .provider-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(139, 175, 139, 0.5);
+        }
+
+        .provider-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem 1.75rem 1rem;
+        }
+
+        .provider-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .provider-logo.groq { background: #f0f4ff; }
+        .provider-logo.openai { background: #f5f5f5; }
+        .provider-logo.gemini { background: #fef7e0; }
+        .provider-logo.openrouter { background: #f0fff4; }
+
+        .provider-card-header h3 {
+            font-family: var(--font-sans);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.1rem;
+            color: var(--slate-text);
+        }
+
+        .provider-card-header .provider-tagline {
+            font-size: 0.8rem;
+            color: var(--gray-muted);
+            margin: 0;
+            font-weight: 400;
+        }
+
+        .provider-card-body {
+            padding: 0.5rem 1.75rem 1.5rem;
+        }
+
+        .provider-card-body ol {
+            margin: 0;
+            padding-left: 1.25rem;
+            font-size: 0.9rem;
+            color: var(--slate-text);
+            line-height: 1.85;
+        }
+
+        .provider-card-body ol li {
+            margin-bottom: 0.3rem;
+            font-weight: 300;
+        }
+
+        .provider-card-body ol li strong {
+            font-weight: 600;
+        }
+
+        .provider-card-body a {
+            color: var(--sage-dark);
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 1px dashed var(--sage-dark);
+            transition: opacity var(--transition-fast);
+        }
+
+        .provider-card-body a:hover {
+            opacity: 0.7;
+        }
+
+        .provider-card-body code {
+            background: rgba(139, 175, 139, 0.12);
+            padding: 0.15rem 0.45rem;
+            border-radius: 4px;
+            font-size: 0.82rem;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            color: var(--sage-dark);
+        }
+
+        .provider-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-sm);
+            background: var(--sage-light);
+            font-size: 0.82rem;
+            color: var(--slate-text);
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .provider-note-icon {
+            flex-shrink: 0;
+            font-size: 1rem;
+            line-height: 1.3;
+        }
+
+        .provider-cta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 1rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: var(--radius-pill);
+            background: var(--sage-dark);
+            color: var(--white) !important;
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: none !important;
+            transition: all var(--transition-fast);
+            box-shadow: 0 2px 8px rgba(139, 175, 139, 0.3);
+        }
+
+        .provider-cta-link:hover {
+            background: #7a9e7a;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(139, 175, 139, 0.4);
+        }
+
+        /* ── Staggered animations ── */
+        .provider-card:nth-child(1) { animation-delay: 0.1s; }
+        .provider-card:nth-child(2) { animation-delay: 0.2s; }
+        .provider-card:nth-child(3) { animation-delay: 0.3s; }
+        .provider-card:nth-child(4) { animation-delay: 0.4s; }
+
+        /* ── Tips section ── */
+        .tips-section {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-soft);
+            padding: 3rem;
+            margin: 0 2rem;
+            max-width: 860px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tips-section h3 {
+            font-family: var(--font-serif);
+            font-size: 1.3rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            color: var(--slate-text);
+        }
+
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(139, 175, 139, 0.12);
+        }
+
+        .tip-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .tip-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            background: var(--sage-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            flex-shrink: 0;
+        }
+
+        .tip-content h4 {
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--slate-text);
+        }
+
+        .tip-content p {
+            font-size: 0.88rem;
+            color: var(--gray-muted);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* ── FAQ section ── */
+        .faq-list {
+            margin-top: 2rem;
+        }
+
+        .faq-item {
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(139, 175, 139, 0.15);
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+            background: var(--white);
+            box-shadow: var(--shadow-soft);
+            transition: all var(--transition-medium);
+        }
+
+        .faq-item:hover {
+            border-color: rgba(139, 175, 139, 0.35);
+        }
+
+        .faq-item[open] {
+            box-shadow: var(--shadow-medium);
+        }
+
+        .faq-item summary {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--slate-text);
+            list-style: none;
+            user-select: none;
+            transition: background var(--transition-fast);
+        }
+
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq-item summary:hover {
+            background: rgba(139, 175, 139, 0.06);
+        }
+
+        .faq-chevron {
+            margin-left: auto;
+            font-size: 1rem;
+            color: var(--sage-dark);
+            transition: transform 0.25s ease;
+        }
+
+        .faq-item[open] .faq-chevron {
+            transform: rotate(90deg);
+        }
+
+        .faq-answer {
+            padding: 0 1.25rem 1.25rem;
+            font-size: 0.9rem;
+            color: var(--gray-muted);
+            line-height: 1.75;
+        }
+
+        .faq-answer a {
+            color: var(--sage-dark);
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 1px dashed var(--sage-dark);
+        }
+
+        /* ── CTA footer strip ── */
+        .cta-strip {
+            text-align: center;
+            padding: 4rem 2rem 5rem;
+        }
+
+        .cta-strip h2 {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .cta-strip p {
+            color: var(--gray-muted);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .provider-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tips-section {
+                padding: 2rem 1.5rem;
+                margin: 0 1rem;
+            }
+
+            .section {
+                padding: 2.5rem 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .provider-card-header {
+                padding: 1.25rem 1.25rem 0.75rem;
+            }
+
+            .provider-card-body {
+                padding: 0.5rem 1.25rem 1.25rem;
+            }
+        }
+    </style>
+    <link rel="icon" type="image/svg+xml" href="./icons/favicon.svg">
+</head>
+
+<body>
+    <!-- Shared site header (nav) -->
+    <script src="./header.js"></script>
+    <div class="guide-wrapper">
+
+        <!-- Background Decorations -->
+        <div class="bg-blob bg-blob-1"></div>
+        <div class="bg-blob bg-blob-2"></div>
+
+        <!-- ── Hero ── -->
+        <header class="hero">
+            <div class="hero-badge">🔑 API Setup</div>
+            <h1>Get your <em>API key</em><br>in minutes</h1>
+            <p class="hero-subtitle">
+                Anviksha uses AI providers to power your interview sessions.
+                Follow the guide below to generate a free API key for your preferred provider.
+            </p>
+        </header>
+
+        <div class="divider"></div>
+
+        <!-- ── Provider Guides ── -->
+        <section class="section" id="providers" aria-labelledby="providersTitle">
+            <p class="section-label">Step-by-Step Guides</p>
+            <h2 class="section-title" id="providersTitle">Choose your AI provider</h2>
+            <p class="section-subtitle">
+                Each provider offers different models, pricing, and capabilities.
+                Pick the one that suits your needs — all work seamlessly with Anviksha.
+            </p>
+
+            <div class="provider-grid">
+                <!-- Groq -->
+                <div class="provider-card">
+                    <div class="provider-card-header">
+                        <div class="provider-logo groq">⚡</div>
+                        <div>
+                            <h3>Groq</h3>
+                            <p class="provider-tagline">Ultra-fast inference</p>
+                        </div>
+                    </div>
+                    <div class="provider-card-body">
+                        <ol>
+                            <li>Visit <a href="https://console.groq.com/keys" target="_blank" rel="noopener noreferrer">console.groq.com/keys</a></li>
+                            <li>Sign up or log in with your <strong>Google</strong> or <strong>GitHub</strong> account</li>
+                            <li>Click <strong>"Create API Key"</strong></li>
+                            <li>Name your key (e.g., <code>anviksha</code>), then copy it</li>
+                        </ol>
+                        <div class="provider-note">
+                            <span class="provider-note-icon">💡</span>
+                            <span>Groq offers a generous <strong>free tier</strong> — great for getting started with no payment method required.</span>
+                        </div>
+                        <a href="https://console.groq.com/keys" target="_blank" rel="noopener noreferrer" class="provider-cta-link" id="groqKeyBtn">
+                            Get Groq Key →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- OpenAI -->
+                <div class="provider-card">
+                    <div class="provider-card-header">
+                        <div class="provider-logo openai">🤖</div>
+                        <div>
+                            <h3>OpenAI</h3>
+                            <p class="provider-tagline">GPT-3.5 / GPT-4</p>
+                        </div>
+                    </div>
+                    <div class="provider-card-body">
+                        <ol>
+                            <li>Go to <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">platform.openai.com/api-keys</a></li>
+                            <li>Log in or create an <strong>OpenAI account</strong></li>
+                            <li>Click <strong>"Create new secret key"</strong></li>
+                            <li>Copy the key — it starts with <code>sk-</code></li>
+                        </ol>
+                        <div class="provider-note">
+                            <span class="provider-note-icon">⚠️</span>
+                            <span>OpenAI requires a <strong>payment method</strong> after the free trial. Usage is billed per token.</span>
+                        </div>
+                        <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer" class="provider-cta-link" id="openaiKeyBtn">
+                            Get OpenAI Key →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Google Gemini -->
+                <div class="provider-card">
+                    <div class="provider-card-header">
+                        <div class="provider-logo gemini">✨</div>
+                        <div>
+                            <h3>Google Gemini</h3>
+                            <p class="provider-tagline">Gemini Pro & Ultra</p>
+                        </div>
+                    </div>
+                    <div class="provider-card-body">
+                        <ol>
+                            <li>Visit <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">aistudio.google.com/app/apikey</a></li>
+                            <li>Sign in with your <strong>Google account</strong></li>
+                            <li>Click <strong>"Create API Key"</strong> and select a project</li>
+                            <li>Copy the generated key</li>
+                        </ol>
+                        <div class="provider-note">
+                            <span class="provider-note-icon">💡</span>
+                            <span>Gemini offers a <strong>free tier</strong> with generous rate limits — ideal for personal use.</span>
+                        </div>
+                        <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="provider-cta-link" id="geminiKeyBtn">
+                            Get Gemini Key →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- OpenRouter -->
+                <div class="provider-card">
+                    <div class="provider-card-header">
+                        <div class="provider-logo openrouter">🔀</div>
+                        <div>
+                            <h3>OpenRouter</h3>
+                            <p class="provider-tagline">Multi-model gateway</p>
+                        </div>
+                    </div>
+                    <div class="provider-card-body">
+                        <ol>
+                            <li>Go to <a href="https://openrouter.ai/keys" target="_blank" rel="noopener noreferrer">openrouter.ai/keys</a></li>
+                            <li>Sign up or log in</li>
+                            <li>Click <strong>"Create Key"</strong></li>
+                            <li>Copy your new API key</li>
+                        </ol>
+                        <div class="provider-note">
+                            <span class="provider-note-icon">💡</span>
+                            <span>OpenRouter lets you access <strong>multiple models</strong> from different providers with a single key.</span>
+                        </div>
+                        <a href="https://openrouter.ai/keys" target="_blank" rel="noopener noreferrer" class="provider-cta-link" id="openrouterKeyBtn">
+                            Get OpenRouter Key →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Tips ── -->
+        <section class="section" style="padding-top: 0;">
+            <div class="tips-section">
+                <h3>🛡️ Important tips for your API key</h3>
+
+                <div class="tip-item">
+                    <div class="tip-icon">🔒</div>
+                    <div class="tip-content">
+                        <h4>Your key stays local</h4>
+                        <p>Anviksha stores your API key in your browser's session storage. It's never sent to our servers or saved permanently.</p>
+                    </div>
+                </div>
+
+                <div class="tip-item">
+                    <div class="tip-icon">🚫</div>
+                    <div class="tip-content">
+                        <h4>Never share your key</h4>
+                        <p>Treat your API key like a password. Don't post it publicly or share it with others.</p>
+                    </div>
+                </div>
+
+                <div class="tip-item">
+                    <div class="tip-icon">💰</div>
+                    <div class="tip-content">
+                        <h4>Set usage limits</h4>
+                        <p>Most providers let you set monthly spending caps. Enable this to avoid unexpected charges.</p>
+                    </div>
+                </div>
+
+                <div class="tip-item">
+                    <div class="tip-icon">🔄</div>
+                    <div class="tip-content">
+                        <h4>Rotate keys periodically</h4>
+                        <p>For best security, regenerate your API key every few months and revoke old ones.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── FAQ ── -->
+        <section class="section" id="faq" aria-labelledby="faqTitle">
+            <p class="section-label" style="text-align:center;">Common Questions</p>
+            <h2 class="section-title" id="faqTitle" style="text-align:center;">Frequently Asked Questions</h2>
+
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary>
+                        Which provider should I choose?
+                        <span class="faq-chevron">›</span>
+                    </summary>
+                    <div class="faq-answer">
+                        If you're just getting started, <strong>Groq</strong> is recommended — it's fast, free, and requires no payment setup. For advanced models, <strong>OpenAI</strong> (GPT-4) or <strong>Google Gemini</strong> are excellent choices.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        Is my API key safe with Anviksha?
+                        <span class="faq-chevron">›</span>
+                    </summary>
+                    <div class="faq-answer">
+                        Yes. Your key is stored only in your browser's <strong>session storage</strong> and is cleared when you close the tab. On the backend, keys are encrypted at rest using <strong>Fernet symmetric encryption</strong>. We never log or persist your raw key.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        How much does it cost to run an interview?
+                        <span class="faq-chevron">›</span>
+                    </summary>
+                    <div class="faq-answer">
+                        A typical 15-minute interview session uses approximately <strong>2,000–5,000 tokens</strong>. With Groq's free tier, this costs nothing. With OpenAI GPT-4, it's roughly $0.05–$0.15 per session depending on response length.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        My API key isn't working — what should I do?
+                        <span class="faq-chevron">›</span>
+                    </summary>
+                    <div class="faq-answer">
+                        Double-check that you've selected the correct <strong>provider</strong> in the dropdown. Make sure the key is copied in full (no trailing spaces). If the issue persists, try generating a fresh key from your provider's dashboard.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        Can I switch providers between sessions?
+                        <span class="faq-chevron">›</span>
+                    </summary>
+                    <div class="faq-answer">
+                        Absolutely. Each session lets you pick a different provider and API key on the <a href="./permissions.html">System Setup</a> page. There's no lock-in.
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <!-- ── CTA ── -->
+        <div class="cta-strip">
+            <h2>Ready to begin?</h2>
+            <p>Once you have your API key, start a personalised interview in under two minutes.</p>
+            <div class="cta-buttons">
+                <a href="./guidelines.html" class="btn btn-primary" id="startInterviewBtn">
+                    Start Your Interview →
+                </a>
+            </div>
+        </div>
+
+    </div><!-- end .guide-wrapper -->
+</body>
+
+</html>
