@@ -7,6 +7,7 @@ import logging
 from cryptography.fernet import Fernet
 import base64
 import hashlib
+from .config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -16,26 +17,29 @@ class CryptoService:
     
     def __init__(self):
         """Initialize crypto service with encryption key"""
-        # Get encryption key from environment or generate one
-        encryption_key = os.environ.get('ENCRYPTION_KEY')
+        # Get encryption key from settings (which loads from environment or .env file)
+        encryption_key = settings.ENCRYPTION_KEY or os.environ.get('ENCRYPTION_KEY')
         
         if not encryption_key:
-            # Generate a key from a default secret (NOT SECURE for production!)
-            # In production, use a proper secret management system
-            default_secret = "anviksha-ai-interview-default-secret-key-change-in-production"
-            logger.warning("ENCRYPTION_KEY not set in environment. Using default (NOT SECURE for production!)")
+            logger.error("ENCRYPTION_KEY not set in environment. A secure key is required.")
+            raise ValueError("ENCRYPTION_KEY environment variable is required for secure encryption.")
             
-            # Derive a Fernet key from the secret
-            key_material = hashlib.sha256(default_secret.encode()).digest()
+        # Ensure the key is properly formatted for Fernet (must be 32 url-safe base64-encoded bytes)
+        try:
+            # Try to decode to see if it's already a valid base64 fernet key
+            base64.urlsafe_b64decode(encryption_key.encode() if isinstance(encryption_key, str) else encryption_key)
+            if not isinstance(encryption_key, bytes):
+                encryption_key = encryption_key.encode()
+        except Exception:
+            # If it's not valid base64 or wrong length, hash it and encode it properly
+            key_material = hashlib.sha256(encryption_key.encode() if isinstance(encryption_key, str) else encryption_key).digest()
             encryption_key = base64.urlsafe_b64encode(key_material)
         else:
-            # Ensure the key is properly formatted for Fernet
-            if len(encryption_key) < 32:
-                # Pad the key if too short
-                key_material = hashlib.sha256(encryption_key.encode()).digest()
+            # If it decoded successfully, we still need to make sure it's the right length (32 bytes when decoded)
+            decoded = base64.urlsafe_b64decode(encryption_key)
+            if len(decoded) != 32:
+                key_material = hashlib.sha256(encryption_key).digest()
                 encryption_key = base64.urlsafe_b64encode(key_material)
-            elif not isinstance(encryption_key, bytes):
-                encryption_key = encryption_key.encode()
         
         self.cipher = Fernet(encryption_key)
         logger.info("CryptoService initialized")
