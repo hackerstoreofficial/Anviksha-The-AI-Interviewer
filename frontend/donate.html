@@ -135,6 +135,7 @@
         .donate-card:nth-child(1) { animation-delay: 0.1s; }
         .donate-card:nth-child(2) { animation-delay: 0.2s; }
         .donate-card:nth-child(3) { animation-delay: 0.3s; }
+        .donate-card:nth-child(4) { animation-delay: 0.4s; }
 
         /* Card header strip */
         .donate-card-header {
@@ -155,9 +156,10 @@
             flex-shrink: 0;
         }
 
-        .donate-card-icon.coffee { background: #fff8e1; }
+        .donate-card-icon.paypal  { background: #e3f2fd; }
         .donate-card-icon.upi    { background: #e8f5e9; }
         .donate-card-icon.github { background: #f3e5f5; }
+        .donate-card-icon.binance { background: #fff8e1; }
 
         .donate-card-header h3 {
             font-family: var(--font-sans);
@@ -509,27 +511,6 @@
 
             <div class="donate-grid">
 
-                <!-- Card 1 — Buy Me a Coffee -->
-                <div class="donate-card" id="coffeeCard">
-                    <div class="donate-card-header">
-                        <div class="donate-card-icon coffee">☕</div>
-                        <div>
-                            <h3>Buy Me a Coffee</h3>
-                            <p class="donate-tagline">Quick & global</p>
-                        </div>
-                    </div>
-                    <div class="donate-card-body">
-                        <p>
-                            Support us with a one-time coffee — takes 30 seconds. Works worldwide with
-                            cards, Apple Pay, Google Pay, and PayPal.
-                        </p>
-                        <a href="https://buymeacoffee.com/your_username"
-                           target="_blank" rel="noopener noreferrer"
-                           class="donate-cta" id="coffeeBtn">
-                            ☕ Buy a Coffee →
-                        </a>
-                    </div>
-                </div>
 
                 <!-- Card 2 — UPI (India) -->
                 <div class="donate-card" id="upiCard">
@@ -543,11 +524,10 @@
                     <div class="donate-card-body">
                         <div class="upi-area">
                             <div class="qr-placeholder" id="upiQrArea">
-                                <!-- Replace the text below with an <img> tag pointing to your QR code -->
-                                Scan to pay<br>via any UPI app
+                                <img src="./icons/paymentqr.png" alt="UPI QR Code – Scan to pay via any UPI app">
                             </div>
                             <div class="upi-id-box">
-                                <code id="upiIdText">yourname@upi</code>
+                                <code id="upiIdText">7479949331@slc</code>
                                 <button class="copy-btn" id="copyUpiBtn" onclick="copyUPI()">
                                     📋 Copy
                                 </button>
@@ -575,6 +555,29 @@
                            target="_blank" rel="noopener noreferrer"
                            class="donate-cta outline" id="githubSponsorBtn">
                             💜 Sponsor on GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 4 — Binance -->
+                <div class="donate-card" id="binanceCard">
+                    <div class="donate-card-header">
+                        <div class="donate-card-icon binance">🪙</div>
+                        <div>
+                            <h3>Binance (Crypto)</h3>
+                            <p class="donate-tagline">Crypto donations</p>
+                        </div>
+                    </div>
+                    <div class="donate-card-body">
+                        <p>
+                            Prefer crypto? Send your contribution via Binance Pay — supports BTC, ETH,
+                            USDT, BNB, and more. Fast, low fees, and borderless.
+                        </p>
+                        <a href="https://app.binance.com/en/my/wallet/account/payment/send?tn=hackerstoreofficial"
+                           target="_blank" rel="noopener noreferrer"
+                           class="donate-cta" id="binanceBtn"
+                           style="background: #f0b90b; color: #1e2329 !important; box-shadow: 0 2px 10px rgba(240,185,11,0.3);">
+                            🪙 Donate via Binance →
                         </a>
                     </div>
                 </div>
